@@ -1,0 +1,17 @@
+{
+    "description": "projeto Adm",
+    "authors": [
+        {
+            "name": "Leandro",
+            "email": "leandro.santos@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Core\\": "core",
+            "App\\": "app",
+            "Adms\\": "adms"
+        }
+    },
+    "require": {}
+}
