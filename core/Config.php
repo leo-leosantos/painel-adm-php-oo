@@ -12,6 +12,7 @@ abstract class Config
         define('CONTROLLER','Login');
         define('METODO','index');
         define('CONTROLLERERRO','Erro');
+        define('EMAILADMIN','admin@admin.com');
 
     }
 }
