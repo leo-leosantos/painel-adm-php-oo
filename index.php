@@ -1,6 +1,7 @@
 <?php
-    require './vendor/autoload.php';
-    use Core\ConfigController;
+   
+
+    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -13,8 +14,11 @@
 
 <body>
     <?php
+            require './vendor/autoload.php';
+            use Core\ConfigController;
 
-        
+
+          
             $home = new  ConfigController();
             $home->loadPage();
 

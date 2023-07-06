@@ -2,9 +2,10 @@
 
 namespace Core;
 
+use Core\CarregarPgAdm;
+use App\Adms\Controllers\Error;
 use App\Adms\Controllers\Login;
 use App\Adms\Controllers\ViewUsers;
-use App\Adms\Controllers\Error;
 
 class ConfigController  extends Config
 {
@@ -116,27 +117,11 @@ class ConfigController  extends Config
     public function loadPage(): void
     {
 
+        // $this->classLoad = "\\App\\Adms\\Controllers\\" . $this->urlController;
+        // $classePage = new $this->classLoad();
+        // $classePage->{$this->urlMetodo}();
 
-        //  $this->urlController = ucwords($this->urlController);
-        // $this->classLoad = "\\App\\Adms\Controllers\\" . $this->urlController;
-
-        //   $classPage = new $this->classLoad();
-        //   $classPage->{$this->urlMetodo}();
-        // $login =  new LoginController();
-        // $login->index();
-
-        $this->classLoad = "\\App\\Adms\\Controllers\\" . $this->urlController;
-        $classePage = new $this->classLoad();
-        $classePage->{$this->urlMetodo}();
-
-
-        // $error =  new Error();
-        // $error->index();
-
-        //  $login =  new Login();
-        //  $login->index();
-
-        // $users =  new ViewUsers();
-        // $users->index();
+        $loadPgAdm = new CarregarPgAdm();
+       $loadPgAdm->loadPage($this->urlController, $this->urlMetodo, $this->urlParamenter);
     }
 }

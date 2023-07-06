@@ -14,5 +14,14 @@ abstract class Config
         define('CONTROLLERERRO','Erro');
         define('EMAILADMIN','admin@admin.com');
 
+
+        //banco de dados conexao usando o docker
+        define('HOST','mysql-srv-7');
+        define('USER','root');
+        define('PASSWORD','root');
+        define('DBNAME','celke_admin');
+        define('PORT',3306);
+       
+
     }
 }
