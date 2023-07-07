@@ -11,7 +11,7 @@ abstract class Config
         define('URLADM','http://localhost/admin/');
         define('CONTROLLER','Login');
         define('METODO','index');
-        define('CONTROLLERERRO','Erro');
+        define('CONTROLLERERRO','Login');
         define('EMAILADMIN','admin@admin.com');
 
 
