@@ -17,9 +17,9 @@ if(isset($this->data['form'])){
 <form action="" method="post" id="form-login">
 
 <label for="">Usuário</label>
-<input type="text" name="user" id="user" placeholder="Digite o Usuário" value="<?php if(isset($valorForm['user'])) {echo $valorForm['user'];}    ?>"><br><br>
+<input type="text" name="user" id="user" placeholder="Digite o Usuário" required value="<?php if(isset($valorForm['user'])) {echo $valorForm['user'];}    ?>"><br><br>
 <label for="">Usuário</label>
-<input type="password" name="password" id="password" placeholder="Digite a senha" value="<?php if(isset($valorForm['password'])) {echo $valorForm['password'];}    ?>"><br><br>
+<input type="password" name="password" id="password" required placeholder="Digite a senha" value="<?php if(isset($valorForm['password'])) {echo $valorForm['password'];}    ?>"><br><br>
 
 <button type="submit" name="SendLogin" value="Acessar">Acessar</button>
 </form>

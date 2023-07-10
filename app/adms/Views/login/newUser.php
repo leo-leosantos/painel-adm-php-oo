@@ -16,14 +16,14 @@ if(isset($this->data['form'])){
 <form action="" method="post" id="form-new-user">
 
 <label for="">Nome</label>
-<input type="text" name="name" id="name" placeholder="Digite o Nome completo" value="<?php if(isset($valorForm['name'])) {echo $valorForm['name'];}    ?>"><br><br>
+<input type="text" name="name" id="name" required placeholder="Digite o Nome completo" value="<?php if(isset($valorForm['name'])) {echo $valorForm['name'];}    ?>"><br><br>
 
 <label for="">Email</label>
-<input type="email" name="email" id="email" placeholder="Digite o email" value="<?php if(isset($valorForm['email'])) {echo $valorForm['email'];}    ?>"><br><br>
+<input type="email" name="email" id="email" required placeholder="Digite o email" value="<?php if(isset($valorForm['email'])) {echo $valorForm['email'];}    ?>"><br><br>
 
 
 <label for="">senha</label>
-<input type="password" name="password" id="password" placeholder="Digite a senha" value="<?php if(isset($valorForm['password'])) {echo $valorForm['password'];}    ?>"><br><br>
+<input type="password" name="password" required id="password" placeholder="Digite a senha" value="<?php if(isset($valorForm['password'])) {echo $valorForm['password'];}    ?>"><br><br>
 
 <button type="submit" name="SendNewUser" value="Cadastrar">Cadastrar</button>
 </form>
