@@ -3,16 +3,13 @@
 
 namespace App\Adms\Models;
 
-use App\Adms\Models\helper\AdmsConn;
 use App\Adms\Models\helper\AdmsCreate;
 use App\Adms\Models\helper\AdmsValEmptyField;
-use PDO;
 
-class AdmsNewUser extends AdmsConn
+class AdmsNewUser 
 {
     private ?array $data;
     private object $conn;
-    private $resultDb;
     private $result;
 
     function getResult()
