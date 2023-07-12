@@ -4,7 +4,9 @@
 namespace App\Adms\Models;
 
 use App\Adms\Models\helper\AdmsCreate;
+use App\Adms\Models\helper\AdmsValEmail;
 use App\Adms\Models\helper\AdmsValEmptyField;
+use App\Adms\Models\helper\AdmsValEmailSingle;
 
 class AdmsNewUser 
 {
@@ -58,25 +60,48 @@ class AdmsNewUser
         $valEmptyField->valField($this->data);
 
         if ($valEmptyField->getResult()) {
-
-            $this->data['password'] = password_hash($this->data['password'], PASSWORD_DEFAULT);
-            $this->data['user'] = $this->data['email'];
-            $this->data['created'] = date("Y-m-d H:i:s");
-
-            // var_dump($this->data);
-
-            $createUser   =  new AdmsCreate();
-            $createUser->exeCreate('adms_users', $this->data);
-
-            if ($createUser->getResult()) {
-                $_SESSION['msg'] = "Add new user successfully";
-                $this->result = false;
-            } else {
-                $_SESSION['msg'] = "Add new user error";
-
-                $this->result = false;
-            }
+            $this->valInput();
+           
         } else {
+            $this->result = false;
+        }
+    }
+
+    private function valInput(): void
+    {
+        $valEmail  = new AdmsValEmail();
+        $valEmail->validateEmail($this->data['email']);
+
+        $valEmailSingle = new AdmsValEmailSingle();
+        $valEmailSingle->validateEmailSingle($this->data['email']);
+
+
+        if(($valEmail->getResult()) and ($valEmailSingle->getResult()))
+        {
+            $this->add();
+        }else{
+            $this->result = false;
+        }
+    }
+
+    
+    private function add(): void
+    {
+        $this->data['password'] = password_hash($this->data['password'], PASSWORD_DEFAULT);
+        $this->data['user'] = $this->data['email'];
+        $this->data['created'] = date("Y-m-d H:i:s");
+
+        // var_dump($this->data);
+
+        $createUser   =  new AdmsCreate();
+        $createUser->exeCreate('adms_users', $this->data);
+
+        if ($createUser->getResult()) {
+            $_SESSION['msg'] = "Add new user successfully";
+            $this->result = false;
+        } else {
+            $_SESSION['msg'] = "Add new user error";
+
             $this->result = false;
         }
     }

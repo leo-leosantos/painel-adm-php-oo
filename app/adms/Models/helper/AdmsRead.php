@@ -47,6 +47,7 @@ class AdmsRead extends AdmsConn
         $this->connection();
         try {
             $this->exeParameter();
+            
             $this->query->execute();
             $this->result =  $this->query->fetchAll();
         } catch (PDOException $pdoError) {

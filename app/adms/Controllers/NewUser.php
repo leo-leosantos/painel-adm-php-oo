@@ -34,7 +34,8 @@ class NewUser
              }
            }else{
             $this->viewNewUser();
-           }
+           }  
+
 
        // $this->data = null;
         
