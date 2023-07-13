@@ -7,8 +7,9 @@ use App\Adms\Models\helper\AdmsCreate;
 use App\Adms\Models\helper\AdmsValEmail;
 use App\Adms\Models\helper\AdmsValEmptyField;
 use App\Adms\Models\helper\AdmsValEmailSingle;
+use App\Adms\Models\helper\AdmsValPassword;
 
-class AdmsNewUser 
+class AdmsNewUser
 {
     private ?array $data;
     private object $conn;
@@ -61,7 +62,6 @@ class AdmsNewUser
 
         if ($valEmptyField->getResult()) {
             $this->valInput();
-           
         } else {
             $this->result = false;
         }
@@ -75,16 +75,18 @@ class AdmsNewUser
         $valEmailSingle = new AdmsValEmailSingle();
         $valEmailSingle->validateEmailSingle($this->data['email']);
 
+        $valPassword = new AdmsValPassword();
+        $valPassword->validatePassword($this->data['password']);
 
-        if(($valEmail->getResult()) and ($valEmailSingle->getResult()))
-        {
+
+        if (($valEmail->getResult()) and ($valEmailSingle->getResult()) and ($valPassword->getResult())) {
             $this->add();
-        }else{
+        } else {
             $this->result = false;
         }
     }
 
-    
+
     private function add(): void
     {
         $this->data['password'] = password_hash($this->data['password'], PASSWORD_DEFAULT);

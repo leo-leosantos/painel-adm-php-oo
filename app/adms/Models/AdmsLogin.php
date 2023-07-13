@@ -25,12 +25,8 @@ class AdmsLogin
 
         $viewUser->fullRead("SELECT id, name, nickname, email, password, image 
                                 FROM adms_users 
-                                WHERE user =:user LIMIT :limit", "user={$this->data['user']}&limit=1");
-        // $viewUser->exeRead(
-        //     "adms_users",
-        //     "WHERE user =:user LIMIT :limit",
-        //     "user={$this->data['user']}&limit=1"
-        // );
+                                WHERE user =:user  OR email =:email LIMIT :limit", "user={$this->data['user']}&email={$this->data['email']}&limit=1");
+     
 
         $this->resultDb = $viewUser->getResult();
         if ($this->resultDb) {
