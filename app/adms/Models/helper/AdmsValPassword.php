@@ -45,11 +45,10 @@ class AdmsValPassword
 
     private function valValuePassword(): void
     {
-        if(preg_match('/^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9-@#$%*]{6}$/', $this->password)){
+        if(preg_match('/^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9-@#$%;*]{6,}$/', $this->password)){
             $this->result = true;
-
         }else{
-            $_SESSION['msg'] = "<p> Error: senha deve ter letras e numeros<p/>";
+            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: A senha deve ter letras e números!</p>";
             $this->result = false;
         }
     }

@@ -8,6 +8,7 @@ use App\Adms\Models\helper\AdmsValEmail;
 use App\Adms\Models\helper\AdmsValEmptyField;
 use App\Adms\Models\helper\AdmsValEmailSingle;
 use App\Adms\Models\helper\AdmsValPassword;
+use App\Adms\Models\helper\AdmsValUserSingleLogin;
 
 class AdmsNewUser
 {
@@ -78,8 +79,11 @@ class AdmsNewUser
         $valPassword = new AdmsValPassword();
         $valPassword->validatePassword($this->data['password']);
 
+        $valUserSingleLogin= new AdmsValUserSingleLogin();
+        $valUserSingleLogin->validateUserSingleLogin($this->data['email']);
 
-        if (($valEmail->getResult()) and ($valEmailSingle->getResult()) and ($valPassword->getResult())) {
+        if (($valEmail->getResult()) and ($valEmailSingle->getResult()) and ($valPassword->getResult())
+            and ($valUserSingleLogin->getResult())) {
             $this->add();
         } else {
             $this->result = false;

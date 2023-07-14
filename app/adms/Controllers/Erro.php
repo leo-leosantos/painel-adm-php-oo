@@ -16,4 +16,9 @@ class Erro
         $loadView =   new ConfigView("adms/Views/error/error", $this->data);
         $loadView->loadView();   
      }
+
+
+
+
+
 }
