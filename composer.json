@@ -13,5 +13,7 @@
             "Adms\\": "adms"
         }
     },
-    "require": {}
+    "require": {
+        "phpmailer/phpmailer": "*"
+    }
 }

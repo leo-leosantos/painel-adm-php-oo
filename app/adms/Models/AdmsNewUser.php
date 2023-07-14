@@ -4,6 +4,7 @@
 namespace App\Adms\Models;
 
 use App\Adms\Models\helper\AdmsCreate;
+use App\Adms\Models\helper\AdmsSendEMail;
 use App\Adms\Models\helper\AdmsValEmail;
 use App\Adms\Models\helper\AdmsValEmptyField;
 use App\Adms\Models\helper\AdmsValEmailSingle;
@@ -15,6 +16,7 @@ class AdmsNewUser
     private ?array $data;
     private object $conn;
     private $result;
+    private string $fromEmail;
 
     function getResult()
     {
@@ -79,11 +81,12 @@ class AdmsNewUser
         $valPassword = new AdmsValPassword();
         $valPassword->validatePassword($this->data['password']);
 
-        $valUserSingleLogin= new AdmsValUserSingleLogin();
+        $valUserSingleLogin = new AdmsValUserSingleLogin();
         $valUserSingleLogin->validateUserSingleLogin($this->data['email']);
 
         if (($valEmail->getResult()) and ($valEmailSingle->getResult()) and ($valPassword->getResult())
-            and ($valUserSingleLogin->getResult())) {
+            and ($valUserSingleLogin->getResult())
+        ) {
             $this->add();
         } else {
             $this->result = false;
@@ -103,12 +106,30 @@ class AdmsNewUser
         $createUser->exeCreate('adms_users', $this->data);
 
         if ($createUser->getResult()) {
-            $_SESSION['msg'] = "Add new user successfully";
-            $this->result = false;
+            // $_SESSION['msg'] = "Add new user successfully";
+            // $this->result = true;
+            $this->sendEmail();
         } else {
             $_SESSION['msg'] = "Add new user error";
 
             $this->result = false;
         }
+    }
+
+    private function sendEmail(): void
+    {
+        $sendEmail = new  AdmsSendEMail();
+        $sendEmail->sendEmail(2);
+
+        if($sendEmail->getResult())
+        {
+            $_SESSION['msg'] = "Add new user successfully acesse sua cx para confirmar o email";
+            $this->result = true;
+        }else{
+            $this->fromEmail = $sendEmail->getFromEmail();
+            $_SESSION['msg'] = "usuario ok, erro no envio do email{$this->fromEmail}";
+            $this->result = false;
+        }
+         
     }
 }
