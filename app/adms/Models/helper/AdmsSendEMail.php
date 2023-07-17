@@ -27,20 +27,20 @@ class AdmsSendEMail
     {
         return $this->fromEmail;
     }
-    public function sendEmail(int $optionConfEmail): void
+    public function sendEmail( array $data, $optionConfEmail): void
     {
         //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
         // $this->dataInfoEmail['port'] = 587;
+        // $this->data['toEmail'] = "lds.leosantos@gmail.com";
+        // $this->data['toName'] = "Leandro";
+        // $this->data['subject'] = "Confirmar o email";
 
+        // //Content
+        // $this->data['contentHtml'] = "Olá Leandro </br> Cadastro ok";
+        // $this->data['contentText'] = "Olá Leandro  Cadastro ok";
         $this->optionConfEmail = $optionConfEmail;
-        $this->data['toEmail'] = "lds.leosantos@gmail.com";
-        $this->data['toName'] = "Leandro";
-        $this->data['subject'] = "Confirmar o email";
+        $this->data = $data;
 
-        //Content
-        $this->data['contentHtml'] = "Olá Leandro </br> Cadastro ok";
-        $this->data['contentText'] = "Olá Leandro  Cadastro ok";
         $this->infoPHPMailer();
     }
 

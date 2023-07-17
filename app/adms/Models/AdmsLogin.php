@@ -23,17 +23,38 @@ class AdmsLogin
         $this->data = $data;
         $viewUser  =  new  AdmsRead();
 
-        $viewUser->fullRead("SELECT id, name, nickname, email, password, image 
-                                FROM adms_users 
-                                WHERE user =:user  OR email =:email LIMIT :limit", "user={$this->data['user']}&email={$this->data['email']}&limit=1");
+        $viewUser->fullRead("SELECT id, name, nickname, email, password, image, adms_sits_user_id FROM adms_users 
+                                WHERE user =:user  OR email =:email LIMIT :limit", 
+                                "user={$this->data['user']}&email={$this->data['user']}&limit=1");
      
 
         $this->resultDb = $viewUser->getResult();
+
         if ($this->resultDb) {
-            $this->valPassword();
+            $this->valEmailPerm();
         } else {
             $_SESSION['msg'] = " Error user or password incorrect";
             return false;
+        }
+    }
+
+    private function valEmailPerm(): void 
+    {
+        if($this->resultDb[0]['adms_sits_user_id'] == 1)
+        {
+            $this->valPassword();
+        }elseif($this->resultDb[0]['adms_sits_user_id'] == 3){
+            $_SESSION['msg'] = "Nexessari confirm email";
+            $this->result = false;
+          }elseif($this->resultDb[0]['adms_sits_user_id'] == 5){
+            $_SESSION['msg'] = "Email descastratado";
+            $this->result = false;
+        }elseif($this->resultDb[0]['adms_sits_user_id'] == 2){
+            $_SESSION['msg'] = "Email inativo";
+            $this->result = false;
+        }else{
+            $_SESSION['msg'] = "Email inativo";
+            $this->result = false;
         }
     }
 

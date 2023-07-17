@@ -17,6 +17,9 @@ class AdmsNewUser
     private object $conn;
     private $result;
     private string $fromEmail;
+    private string $firstName;
+    private array $emailData;
+    private string $url;
 
     function getResult()
     {
@@ -98,6 +101,8 @@ class AdmsNewUser
     {
         $this->data['password'] = password_hash($this->data['password'], PASSWORD_DEFAULT);
         $this->data['user'] = $this->data['email'];
+        $this->data['conf_email'] = password_hash($this->data['password'] . date("Y-m-d H:i:s"), PASSWORD_DEFAULT);
+
         $this->data['created'] = date("Y-m-d H:i:s");
 
         // var_dump($this->data);
@@ -118,8 +123,11 @@ class AdmsNewUser
 
     private function sendEmail(): void
     {
+        $this->contentEmailHtml();
+        $this->contentEmailText();
+
         $sendEmail = new  AdmsSendEMail();
-        $sendEmail->sendEmail(2);
+        $sendEmail->sendEmail($this->emailData ,1);
 
         if($sendEmail->getResult())
         {
@@ -131,5 +139,35 @@ class AdmsNewUser
             $this->result = false;
         }
          
+    }
+
+
+    private function contentEmailHtml() : void
+    {
+        $name =  explode(" ", $this->data['name']);
+        $this->firstName = $name[0];
+        $this->emailData['toEmail'] = $this->data['email'];
+        $this->emailData['toName'] = $this->data['name'];
+        $this->emailData['subject'] = "Confirmar sua conta ";
+        $this->url = URLADM . "conf-email/index?key="  .  $this->data['conf_email'];
+        $this->emailData['contentHtml'] = "Prezado {$this->firstName}<br><br>";
+        $this->emailData['contentHtml'] .= "Obrigado por cadastrar<br><br>";
+        $this->emailData['contentHtml'] .= "Click no link abaixo <br><br>";
+        $this->emailData['contentHtml'] .= "<a href='{$this->url}'> {$this->url}</a> <br><br>";
+        $this->emailData['contentHtml'] .= "Empresa XXX";
+
+
+    }
+
+
+    private function contentEmailText() : void
+    {
+        
+        $this->emailData['contentText'] = "Prezado {$this->firstName}\n\n";
+        $this->emailData['contentText'] .= "Obrigado por cadastrar\n\n";
+        $this->emailData['contentText'] .= "Click no link abaixo \n\n";
+        $this->emailData['contentText'] .= $this->url ."\n\n";
+        $this->emailData['contentText'] .= "Empresa XXX";
+
     }
 }
