@@ -46,7 +46,7 @@ class CarregarPgAdm  extends Config
 
     private function pgPublic(): void
     {
-        $this->listPgPublic = ["Login", "Error", "Logout", "NewUser"];
+        $this->listPgPublic = ["Login", "Error", "Logout", "NewUser", "ConfEmail",];
 
         if (in_array($this->urlController, $this->listPgPublic)) {
             $this->classLoad = "\\App\\Adms\\Controllers\\" . $this->urlController;
@@ -78,17 +78,17 @@ class CarregarPgAdm  extends Config
             header("Location: " . $urlRedirect);
         }
     }
-    private function slugController(string $slugController): string
+    private function slugController(string $urlController): string
     {
 
-        $this->urlSlugController = $slugController;
+        $this->urlController = $urlController;
 
-        $this->urlSlugController =   strtolower($this->urlSlugController);
-        $this->urlSlugController =   str_replace("-", " ", $this->urlSlugController);
-        $this->urlSlugController =   ucwords($this->urlSlugController);
-        $this->urlSlugController =   str_replace(" ", "", $this->urlSlugController);
+        $this->urlController =   strtolower($this->urlController);
+        $this->urlController =   str_replace("-", " ", $this->urlController);
+        $this->urlController =   ucwords($this->urlController);
+        $this->urlController =   str_replace(" ", "", $this->urlController);
 
-        return $this->urlSlugController;
+        return $this->urlController;
     }
 
     /**
@@ -97,11 +97,11 @@ class CarregarPgAdm  extends Config
      * @param [type] $urlSlugMetodo
      * @return string
      */
-    private function slugMetodo(string $urlSlugMetodo): string
+    private function slugMetodo(string $urlMetodo): string
     {
 
-        $this->urlSlugMetodo = $this->slugController($urlSlugMetodo);
-        $this->urlSlugMetodo =   lcfirst($this->urlSlugMetodo);
-        return $this->urlSlugMetodo;
+        $this->urlMetodo = $this->slugController($urlMetodo);
+        $this->urlMetodo =   lcfirst($this->urlMetodo);
+        return $this->urlMetodo;
     }
 }
