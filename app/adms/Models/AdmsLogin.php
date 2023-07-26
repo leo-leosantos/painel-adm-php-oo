@@ -44,7 +44,7 @@ class AdmsLogin
         {
             $this->valPassword();
         }elseif($this->resultDb[0]['adms_sits_user_id'] == 3){
-            $_SESSION['msg'] = "Nexessari confirm email";
+            $_SESSION['msg'] = "Nexessari confirm email. SOlicite um um novo link <a href = '".URLADM."new-conf-email/index'>Clique aqui</a>";
             $this->result = false;
           }elseif($this->resultDb[0]['adms_sits_user_id'] == 5){
             $_SESSION['msg'] = "Email descastratado";
