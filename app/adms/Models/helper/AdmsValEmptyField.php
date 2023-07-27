@@ -22,7 +22,7 @@ class AdmsValEmptyField
         $this->data = array_map('trim', $this->data);
 
         if(in_array('',$this->data )){
-            $_SESSION['msg'] =  "<strong> Error nesce tdos os  cmpaos  </strong>";
+            $_SESSION['msg'] =  "<strong> Error favor precnher o email </strong>";
             $this->result = false;
 
         }else{

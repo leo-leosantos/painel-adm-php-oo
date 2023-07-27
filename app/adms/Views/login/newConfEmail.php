@@ -19,7 +19,7 @@
 
 
 <label for="">Email</label>
-<input type="email" name="email" id="email" required placeholder="Digite o email" value=""><br><br>
+<input type="email" name="email" id="email" required placeholder="Digite o email" value="<?php if(isset($valorForm['email'])) {echo $valorForm['email'];}    ?>"><br><br>
 
 
 
