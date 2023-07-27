@@ -7,6 +7,7 @@ use PDO;
 use App\Adms\Models\helper\AdmsConn;
 use App\Adms\Models\helper\AdmsRead;
 use App\Adms\Models\helper\AdmsSendEMail;
+use App\Adms\Models\helper\AdmsUpdate;
 use App\Adms\Models\helper\AdmsValEmptyField;
 
 class AdmsNewConfEmail extends AdmsConn
@@ -14,6 +15,8 @@ class AdmsNewConfEmail extends AdmsConn
     private ?array $data;
     private object $conn;
     private bool $result;
+    private array $dataSave;
+
     private array $resultBd;
     private string $fromEmail;
     private string $firstName;
@@ -29,14 +32,13 @@ class AdmsNewConfEmail extends AdmsConn
     public function newConfEmail(array $data = null): void
     {
         $this->data = $data;
-        $valEmptyField=  new AdmsValEmptyField();
+        $valEmptyField =  new AdmsValEmptyField();
         $valEmptyField->valField($this->data);
-            if($valEmptyField->getResult()){
-                $this->valUser();
-            }else{
-                  $this->result = false;  
-            }
-
+        if ($valEmptyField->getResult()) {
+            $this->valUser();
+        } else {
+            $this->result = false;
+        }
     }
 
     private function valUser(): void
@@ -57,29 +59,41 @@ class AdmsNewConfEmail extends AdmsConn
     private function valConfEmail(): void
     {
         if ((empty($this->resultBd[0]['conf_email'])) or ($this->resultBd[0]['conf_email'] == null)) {
-            $confEmail =    password_hash(date("Y-m-d H:i:s") . $this->resultBd[0]['id'], PASSWORD_DEFAULT);
+            $this->dataSave['conf_email'] =  password_hash(date("Y-m-d H:i:s") . $this->resultBd[0]['id'], PASSWORD_DEFAULT);
 
-            $query_activate_user  = "UPDATE adms_users 
-                            SET conf_email =:conf_email, modified = now() 
-                            WHERE id =:id
-                            LIMIT :limit";
-
-            $activate_user =   $this->connectDb()->prepare($query_activate_user);
-            $activate_user->bindParam(':conf_email', $confEmail);
-            $activate_user->bindParam(':id', $this->resultBd[0]['id']);
-            $activate_user->bindValue(':limit', 1, PDO::PARAM_INT);
-            $activate_user->execute();
-
-
-            if ($activate_user->rowCount()) {
-                $this->resultBd[0]['conf_email'] = $confEmail;
+            $updateConfEmail  = new  AdmsUpdate();
+            $updateConfEmail->exeUpdate("adms_users", $this->dataSave, " WHERE id=:id", "id={ $this->resultBd[0]['id']}");
+            if ($updateConfEmail->getResult()) {
+                $this->resultBd[0]['conf_email'] = $this->dataSave['conf_email'];
                 $this->sendEmail();
             } else {
                 $_SESSION['msg'] = "Error link nao enviado";
-
                 $this->result = false;
             }
+            // $query_activate_user  = "UPDATE adms_users 
+            //                 SET conf_email =:conf_email, modified = now() 
+            //                 WHERE id =:id
+            //                 LIMIT :limit";
+
+            // $activate_user =   $this->connectDb()->prepare($query_activate_user);
+            // $activate_user->bindParam(':conf_email', $confEmail);
+            // $activate_user->bindParam(':id', $this->resultBd[0]['id']);
+            // $activate_user->bindValue(':limit', 1, PDO::PARAM_INT);
+            // $activate_user->execute();
+
+
+            // if ($activate_user->rowCount()) {
+            //     $this->resultBd[0]['conf_email'] = $confEmail;
+            //     $this->sendEmail();
+            // } else {
+            //     $_SESSION['msg'] = "Error link nao enviado";
+
+            //     $this->result = false;
+            // $this->result = false;
+
+            // }
         } else {
+            // $this->result = false;
 
             $this->sendEmail();
         }
