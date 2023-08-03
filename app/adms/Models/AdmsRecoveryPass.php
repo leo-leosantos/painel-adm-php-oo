@@ -39,7 +39,7 @@ class AdmsRecoveryPass extends AdmsConn
       //  var_dump($valEmptyField->getResult()  );
 
         if ($valEmptyField->getResult()) {
-           var_dump( $this->valUser());
+           $this->valUser();
         } else {
             $this->result = false;
         }
