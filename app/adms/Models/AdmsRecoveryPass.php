@@ -10,7 +10,7 @@ use App\Adms\Models\helper\AdmsSendEMail;
 use App\Adms\Models\helper\AdmsUpdate;
 use App\Adms\Models\helper\AdmsValEmptyField;
 
-class AdmsNewConfEmail extends AdmsConn
+class AdmsRecoveryPass extends AdmsConn
 {
     private ?array $data;
     private object $conn;
@@ -29,13 +29,17 @@ class AdmsNewConfEmail extends AdmsConn
     }
 
 
-    public function newConfEmail(array $data = null): void
+    public function recoveryPassword(array $data = null): void
     {
         $this->data = $data;
+      //  var_dump( $this->data   );
+
         $valEmptyField =  new AdmsValEmptyField();
         $valEmptyField->valField($this->data);
+      //  var_dump($valEmptyField->getResult()  );
+
         if ($valEmptyField->getResult()) {
-            $this->valUser();
+           var_dump( $this->valUser());
         } else {
             $this->result = false;
         }
@@ -44,60 +48,43 @@ class AdmsNewConfEmail extends AdmsConn
     private function valUser(): void
     {
         $newConfEmail   = new AdmsRead();
-        $newConfEmail->fullRead("SELECT id, name, email, conf_email
+        $newConfEmail->fullRead("SELECT id, name, nickname, email
                                  FROM adms_users
-                                 WHERE email =:email LIMIT :limit", "email={$this->data['email']}&limit=1");
+                                 WHERE email=:email
+                                 LIMIT :limit", 
+                                 "email={$this->data['email']}&limit=1");
+           // var_dump($newConfEmail);
         $this->resultBd = $newConfEmail->getResult();
-        if ($this->resultBd) {
-            $this->valConfEmail();
+
+       var_dump(   $this->resultBd = $newConfEmail->getResult());
+        $this->resultBd = $newConfEmail->getResult();
+        if ( $this->resultBd) {
+         //   var_dump(   $this->resultBd = $newConfEmail->getResult());
+           $this->valConfEmail();
         } else {
-            $_SESSION['msg'] = "Error email nao cadastrado";
+            $_SESSION['msg'] = "Error email nao cadastrado link 55";
 
             $this->result = false;
         }
     }
     private function valConfEmail(): void
     {
-        if ((empty($this->resultBd[0]['conf_email'])) or ($this->resultBd[0]['conf_email'] == null)) {
-            $this->dataSave['conf_email'] =  password_hash(date("Y-m-d H:i:s") . $this->resultBd[0]['id'], PASSWORD_DEFAULT);
+            $this->dataSave['recover_password'] =  password_hash(date("Y-m-d H:i:s") . $this->resultBd[0]['id'], PASSWORD_DEFAULT);
 
-            $updateConfEmail  = new  AdmsUpdate();
-            $updateConfEmail->exeUpdate("adms_users", $this->dataSave, "WHERE id=:id", "id={$this->resultBd[0]['id']}");
+          //  var_dump($this->dataSave['recover_password']);
+          //  var_dump($this->resultBd[0]['id']);
+             $updateConfEmail  = new  AdmsUpdate();
+             $updateConfEmail->exeUpdate("adms_users", $this->dataSave, "WHERE id=:id", "id={$this->resultBd[0]['id']}");
+            // var_dump($updateConfEmail);
 
             if ($updateConfEmail->getResult()) {
-                $this->resultBd[0]['conf_email'] = $this->dataSave['conf_email'];
+
+               $this->resultBd[0]['recover_password'] = $this->dataSave['recover_password'];
                 $this->sendEmail();
             } else {
-                $_SESSION['msg'] = "Error link nao enviado";
+                $_SESSION['msg'] = "Error link nao enviado val conf email";
                 $this->result = false;
             }
-            // $query_activate_user  = "UPDATE adms_users 
-            //                 SET conf_email =:conf_email, modified = now() 
-            //                 WHERE id =:id
-            //                 LIMIT :limit";
-
-            // $activate_user =   $this->connectDb()->prepare($query_activate_user);
-            // $activate_user->bindParam(':conf_email', $confEmail);
-            // $activate_user->bindParam(':id', $this->resultBd[0]['id']);
-            // $activate_user->bindValue(':limit', 1, PDO::PARAM_INT);
-            // $activate_user->execute();
-
-
-            // if ($activate_user->rowCount()) {
-            //     $this->resultBd[0]['conf_email'] = $confEmail;
-            //     $this->sendEmail();
-            // } else {
-            //     $_SESSION['msg'] = "Error link nao enviado";
-
-            //     $this->result = false;
-            // $this->result = false;
-
-            // }
-        } else {
-            // $this->result = false;
-
-            $this->sendEmail();
-        }
     }
 
     private function sendEmail(): void
@@ -108,11 +95,11 @@ class AdmsNewConfEmail extends AdmsConn
         $sendEmail->sendEmail($this->emailData, 2);
 
         if ($sendEmail->getResult()) {
-            $_SESSION['msg'] = "usuario ok,  novo link enviado com succeso  no seu  email: {$this->resultBd[0]['email']}";
+            $_SESSION['msg'] = "usuario ok,  recuperar senha novo link enviado com succeso  no seu  email: {$this->resultBd[0]['email']}";
             $this->result = true;
         } else {
             $this->fromEmail = $sendEmail->getFromEmail();
-            $_SESSION['msg'] = "usuario ok, erro no envio do email{$this->fromEmail}";
+            $_SESSION['msg'] = "usuario ok, erro no recuperae senha do email{$this->fromEmail}";
             $this->result = false;
         }
     }
@@ -127,10 +114,10 @@ class AdmsNewConfEmail extends AdmsConn
         $this->firstName = $name[0];
         $this->emailData['toEmail'] = $this->data['email'];
         $this->emailData['toName'] = $name;
-        $this->emailData['subject'] = "Confirmar sua conta ";
-        $this->url = URLADM . "conf-email/index?key="  .  $this->resultBd[0]['conf_email'];
+        $this->emailData['subject'] = "REcuperar senha ";
+        $this->url = URLADM . "update-password/index?key="  .  $this->resultBd[0]['recover_password'];
         $this->emailData['contentHtml'] = "Prezado {$this->firstName}<br><br>";
-        $this->emailData['contentHtml'] .= "Novo  link  para se cadastrar<br><br>";
+        $this->emailData['contentHtml'] .= "REcuperar senha<br><br>";
         $this->emailData['contentHtml'] .= "Click no link abaixo <br><br>";
         $this->emailData['contentHtml'] .= "<a href='{$this->url}'> {$this->url}</a> <br><br>";
         $this->emailData['contentHtml'] .= "Empresa XXX";
@@ -139,9 +126,8 @@ class AdmsNewConfEmail extends AdmsConn
 
     private function emailText(): void
     {
-
         $this->emailData['contentText'] = "Prezado {$this->firstName}\n\n";
-        $this->emailData['contentText'] .= "Obrigado por cadastrar\n\n";
+        $this->emailData['contentText'] .= "Obrigado por Recuperar senha\n\n";
         $this->emailData['contentText'] .= "Click no link abaixo \n\n";
         $this->emailData['contentText'] .= $this->url . "\n\n";
         $this->emailData['contentText'] .= "Empresa XXX";

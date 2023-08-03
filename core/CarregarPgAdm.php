@@ -46,7 +46,7 @@ class CarregarPgAdm  extends Config
 
     private function pgPublic(): void
     {
-        $this->listPgPublic = ["Login", "Error", "Logout", "NewUser", "ConfEmail","NewConfEmail"];
+        $this->listPgPublic = ["Login", "Error", "Logout", "NewUser", "ConfEmail","NewConfEmail","RecoveryPassword"];
 
         if (in_array($this->urlController, $this->listPgPublic)) {
             $this->classLoad = "\\App\\Adms\\Controllers\\" . $this->urlController;

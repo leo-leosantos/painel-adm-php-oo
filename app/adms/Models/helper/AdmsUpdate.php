@@ -13,13 +13,13 @@ class AdmsUpdate extends AdmsConn
     private ?string $terms;
     private array $data;
     private array $value = [];
-    private ?string $result;
+    private bool $result;
     private object $update;
     private string $query;
     private object $conn;
 
 
-    function getResult(): ?string
+    function getResult(): bool
     {
         return $this->result;
     }
@@ -45,29 +45,33 @@ class AdmsUpdate extends AdmsConn
         foreach ($this->data as $key => $value) {
             $values[] = $key . "=:" . $key;
 
-            var_dump($values);
         }
         $values = implode(', ', $values);
 
-        var_dump($values);
+       // var_dump($values);
 
         $this->query = "UPDATE {$this->table} SET {$values} {$this->terms} ";
+       // var_dump($this->query);
         $this->exeInstruction();
     }
 
 
     private function exeInstruction(): void
     {
-        $this->connection();
+       $this->connection();
 
-        try {
-            $this->update->execute(array_merge($this->data, $this->value));
-            $this->result = true;
-        } catch (PDOException $th) {
+        $this->update->execute(array_merge($this->data, $this->value));
+       $this->result = true;
+        // try {
+        //     $this->update->execute(array_merge($this->data, $this->value));
+        //     var_dump($this->update->execute(array_merge($this->data, $this->value)));
 
-            $this->result = null;
-            throw $th;
-        }
+        //     $this->result = true;
+        // } catch (PDOException $th) {
+
+        //     $this->result = null;
+        //     throw $th;
+        // }
     }
     private function connection(): void
     {

@@ -73,3 +73,16 @@ if(FormLogin){
         
         });
     }
+
+    const recoveryPass = document.getElementById("form-recovery-pass");
+    if(recoveryPass){
+        recoveryPass.addEventListener("submit", async(e) => {
+            var email = document.querySelector("#email").value;
+            if(email === ""){
+                e.preventDefault();
+                document.getElementById("msg").innerHTML = "<p> error: campo email requeried!</p>"
+                    return;
+            }
+        
+        });
+    }

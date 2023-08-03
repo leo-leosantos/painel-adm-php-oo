@@ -26,4 +26,5 @@ if(isset($this->data['form'])){
 
 <br><br>
 <p><a href="<?= URLADM ?>new-user/index">Cadastrar</a></p>
+<p><a href="<?= URLADM ?>recovery-password/index">Recuperar Senha ?</a></p>
 
