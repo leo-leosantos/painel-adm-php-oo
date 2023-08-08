@@ -23,8 +23,9 @@ if(isset($this->data['form'])){
 
 
 <label for="">senha</label>
-<input type="password" name="password" required id="password" placeholder="Digite a senha" value="<?php if(isset($valorForm['password'])) {echo $valorForm['password'];}    ?>"><br><br>
+<input type="password" name="password" required id="password" placeholder="Digite a senha" onkeyup="passwordStrength()" autocomplete="on" value="<?php if(isset($valorForm['password'])) {echo $valorForm['password'];}    ?>"><br><br>
 
+<span id="msgViewStrength"></span><br>
 <button type="submit" name="SendNewUser" value="Cadastrar">Cadastrar</button>
 </form>
 

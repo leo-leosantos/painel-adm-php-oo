@@ -42,9 +42,6 @@ class AdmsConfEmail extends AdmsConn
                                         WHERE conf_email =:conf_email 
                                         LIMIT :limit", "conf_email={$this->key}&limit=1");
 
-
-
-
             if ($this->resultBd = $viewKeyConfEmail->getResult()) {
 
                 $dados = $this->updateSitUser();
@@ -64,8 +61,7 @@ class AdmsConfEmail extends AdmsConn
 
         $this->dataSave['conf_email'] = null;
         $this->dataSave['adms_sits_user_id'] = 1;
-
-
+        $this->dataSave['modified'] = date("Y-m-d H:i:s");
 
         $upConfEmail = new \App\adms\Models\helper\AdmsUpdate();
         $upConfEmail->exeUpdate("adms_users", $this->dataSave, "WHERE id=:id", "id={$this->resultBd[0]['id']}");
@@ -77,39 +73,5 @@ class AdmsConfEmail extends AdmsConn
             $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Link inválido!</p>";
             $this->result = false;
         }
-
-
-        //         $conf_email = null;
-        //         $adms_sits_user_id = 1;
-
-
-        //             $query_activate_user = "UPDATE adms_users 
-        //             SET conf_email=:conf_email, 
-        //             adms_sits_user_id=:adms_sits_user_id,
-        //             modified = NOW() 
-        //             WHERE id=:id 
-        //             LIMIT 1";
-
-
-        // var_dump( $query_activate_user);
-
-        // die();
-
-
-
-        //         $active_email = $this->connectDb()->prepare($query_activate_user);
-        //         $active_email->bindParam(':conf_email', $conf_email);
-        //         $active_email->bindParam(':adms_sits_user_id', $adms_sits_user_id);
-        //         $active_email->bindParam(':id', $this->resultBd[0]['id']);
-        //         $active_email->execute();
-
-
-        //         if ($active_email->rowCount()) {
-        //             $_SESSION['msg'] = "link active successfully";
-        //             $this->result = true;
-        //         } else {
-        //             $_SESSION['msg'] = "Error: link invalid updateSitUser";
-        //             $this->result = false;
-        //         }
     }
 }

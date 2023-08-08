@@ -14,7 +14,7 @@ class Erro
         echo  "pagina Error Index<br>"; 
         $this->data = ["Page not found"];
         $loadView =   new ConfigView("adms/Views/error/error", $this->data);
-        $loadView->loadView();   
+        $loadView->loadViewLogin();   
      }
 
 

@@ -40,6 +40,6 @@ class NewConfEmail
     {
 
         $loadView = new ConfigView("adms/views/login/newConfEmail", $this->data);
-        $loadView->loadView();
+        $loadView->loadViewLogin();
     }
 }

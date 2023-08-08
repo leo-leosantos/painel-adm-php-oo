@@ -44,7 +44,6 @@ class AdmsUpdatePassword
                 $_SESSION['msg'] = "Error: link invalid else  linha 43 validade key";
                 $this->result = false;
                 return false;
-
             }
         } else {
             $_SESSION['msg'] = "Error: link invalid confEmail";
@@ -62,7 +61,7 @@ class AdmsUpdatePassword
 
         //var_dump($valEmptyField);
         if ($valEmptyField->getResult()) {
-             $this->valInput();
+            $this->valInput();
         } else {
             $this->result = false;
         }
@@ -70,19 +69,18 @@ class AdmsUpdatePassword
 
     private function valInput(): void
     {
-         $valPassword =   new AdmsValPassword();
-         $valPassword->validatePassword($this->data['password']);
+        $valPassword =   new AdmsValPassword();
+        $valPassword->validatePassword($this->data['password']);
 
-         if($valPassword->getResult()){
-            if($this->valKey($this->data['key'])){
+        if ($valPassword->getResult()) {
+            if ($this->valKey($this->data['key'])) {
                 $this->updatePassword();
-            }else{
+            } else {
                 $this->result = false;
-
             }
-         }else{
+        } else {
             $this->result = false;
-         }
+        }
     }
 
     private function updatePassword(): void
@@ -95,12 +93,12 @@ class AdmsUpdatePassword
         $upPassword = new AdmsUpdate();
         $upPassword->exeUpdate("adms_users", $this->dataSave, "WHERE id=:id", "id={$this->resultBd[0]['id']}");
 
-     
 
-        if($upPassword->getResult()){
+
+        if ($upPassword->getResult()) {
             $_SESSION['msg'] = "success: senha atualizada com suceeso linha 102 admsUpdatePassword";
             $this->result = true;
-        }else{
+        } else {
             $_SESSION['msg'] = "error: senha não  atualizada linha 105 admsUpdatePassword";
             $this->result = false;
         }

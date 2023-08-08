@@ -23,7 +23,7 @@ class RecoveryPassword
                  $recoveryPass =  new AdmsRecoveryPass();
                
                  $recoveryPass->recoveryPassword($this->dataForm);
-                 var_dump( $recoveryPass->getResult());
+                // var_dump( $recoveryPass->getResult());
                  if($recoveryPass->getResult()){
                     $urlRedirect =  URLADM . "login/index";
                     header("Location: " . $urlRedirect);
@@ -43,7 +43,7 @@ class RecoveryPassword
      private function viewRecoveryPass(): void
      {
         $loadView = new ConfigView("adms/views/login/recoveryPassword", $this->data);
-        $loadView->loadView();    
+        $loadView->loadViewLogin();    
      }
 
 

@@ -14,10 +14,10 @@ if(isset($this->data['form'])){
     echo $_SESSION['msg'];
     unset($_SESSION['msg']);
 } ?>
-<form action="" method="post" id="form-login">
+<form action="" method="post" id="update-password">
 
 <label for="">Usuário</label>
-<input type="password" name="password" id="password" required placeholder="Digite a nova senha" value="<?php if(isset($valorForm['password'])) {echo $valorForm['password'];}    ?>"><br><br>
+<input type="password" name="password" id="password" onkeyup="passwordStrength()" required autocomplete="on" placeholder="Digite a nova senha" value="<?php if(isset($valorForm['password'])) {echo $valorForm['password'];}    ?>"><br><br>
 
 <button type="submit" name="SendUpPass" value="Salvar">Salvar</button>
 </form>

@@ -60,6 +60,7 @@ class AdmsNewConfEmail extends AdmsConn
     {
         if ((empty($this->resultBd[0]['conf_email'])) or ($this->resultBd[0]['conf_email'] == null)) {
             $this->dataSave['conf_email'] =  password_hash(date("Y-m-d H:i:s") . $this->resultBd[0]['id'], PASSWORD_DEFAULT);
+            $this->dataSave['modified'] = date("Y-m-d H:i:s");
 
             $updateConfEmail  = new  AdmsUpdate();
             $updateConfEmail->exeUpdate("adms_users", $this->dataSave, "WHERE id=:id", "id={$this->resultBd[0]['id']}");
@@ -71,28 +72,6 @@ class AdmsNewConfEmail extends AdmsConn
                 $_SESSION['msg'] = "Error link nao enviado";
                 $this->result = false;
             }
-            // $query_activate_user  = "UPDATE adms_users 
-            //                 SET conf_email =:conf_email, modified = now() 
-            //                 WHERE id =:id
-            //                 LIMIT :limit";
-
-            // $activate_user =   $this->connectDb()->prepare($query_activate_user);
-            // $activate_user->bindParam(':conf_email', $confEmail);
-            // $activate_user->bindParam(':id', $this->resultBd[0]['id']);
-            // $activate_user->bindValue(':limit', 1, PDO::PARAM_INT);
-            // $activate_user->execute();
-
-
-            // if ($activate_user->rowCount()) {
-            //     $this->resultBd[0]['conf_email'] = $confEmail;
-            //     $this->sendEmail();
-            // } else {
-            //     $_SESSION['msg'] = "Error link nao enviado";
-
-            //     $this->result = false;
-            // $this->result = false;
-
-            // }
         } else {
             // $this->result = false;
 

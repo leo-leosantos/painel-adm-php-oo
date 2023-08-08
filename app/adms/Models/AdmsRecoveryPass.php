@@ -32,14 +32,14 @@ class AdmsRecoveryPass extends AdmsConn
     public function recoveryPassword(array $data = null): void
     {
         $this->data = $data;
-      //  var_dump( $this->data   );
+        //  var_dump( $this->data   );
 
         $valEmptyField =  new AdmsValEmptyField();
         $valEmptyField->valField($this->data);
-      //  var_dump($valEmptyField->getResult()  );
+        //  var_dump($valEmptyField->getResult()  );
 
         if ($valEmptyField->getResult()) {
-           $this->valUser();
+            $this->valUser();
         } else {
             $this->result = false;
         }
@@ -48,19 +48,21 @@ class AdmsRecoveryPass extends AdmsConn
     private function valUser(): void
     {
         $newConfEmail   = new AdmsRead();
-        $newConfEmail->fullRead("SELECT id, name, nickname, email
+        $newConfEmail->fullRead(
+            "SELECT id, name, nickname, email
                                  FROM adms_users
                                  WHERE email=:email
-                                 LIMIT :limit", 
-                                 "email={$this->data['email']}&limit=1");
-           // var_dump($newConfEmail);
+                                 LIMIT :limit",
+            "email={$this->data['email']}&limit=1"
+        );
+        // var_dump($newConfEmail);
         $this->resultBd = $newConfEmail->getResult();
 
-       var_dump(   $this->resultBd = $newConfEmail->getResult());
+        // var_dump(   $this->resultBd = $newConfEmail->getResult());
         $this->resultBd = $newConfEmail->getResult();
-        if ( $this->resultBd) {
-         //   var_dump(   $this->resultBd = $newConfEmail->getResult());
-           $this->valConfEmail();
+        if ($this->resultBd) {
+            //   var_dump(   $this->resultBd = $newConfEmail->getResult());
+            $this->valConfEmail();
         } else {
             $_SESSION['msg'] = "Error email nao cadastrado link 55";
 
@@ -69,22 +71,23 @@ class AdmsRecoveryPass extends AdmsConn
     }
     private function valConfEmail(): void
     {
-            $this->dataSave['recover_password'] =  password_hash(date("Y-m-d H:i:s") . $this->resultBd[0]['id'], PASSWORD_DEFAULT);
+        $this->dataSave['recover_password'] =  password_hash(date("Y-m-d H:i:s") . $this->resultBd[0]['id'], PASSWORD_DEFAULT);
+        $this->dataSave['modified'] = date("Y-m-d H:i:s");
 
-          //  var_dump($this->dataSave['recover_password']);
-          //  var_dump($this->resultBd[0]['id']);
-             $updateConfEmail  = new  AdmsUpdate();
-             $updateConfEmail->exeUpdate("adms_users", $this->dataSave, "WHERE id=:id", "id={$this->resultBd[0]['id']}");
-            // var_dump($updateConfEmail);
+        //  var_dump($this->dataSave['recover_password']);
+        //  var_dump($this->resultBd[0]['id']);
+        $updateConfEmail  = new  AdmsUpdate();
+        $updateConfEmail->exeUpdate("adms_users", $this->dataSave, "WHERE id=:id", "id={$this->resultBd[0]['id']}");
+        // var_dump($updateConfEmail);
 
-            if ($updateConfEmail->getResult()) {
+        if ($updateConfEmail->getResult()) {
 
-               $this->resultBd[0]['recover_password'] = $this->dataSave['recover_password'];
-                $this->sendEmail();
-            } else {
-                $_SESSION['msg'] = "Error link nao enviado val conf email";
-                $this->result = false;
-            }
+            $this->resultBd[0]['recover_password'] = $this->dataSave['recover_password'];
+            $this->sendEmail();
+        } else {
+            $_SESSION['msg'] = "Error link nao enviado val conf email";
+            $this->result = false;
+        }
     }
 
     private function sendEmail(): void
@@ -103,8 +106,6 @@ class AdmsRecoveryPass extends AdmsConn
             $this->result = false;
         }
     }
-
-
 
 
     private function emailHTML(): void

@@ -73,6 +73,6 @@ class UpdatePassword
     private function viewUpdatePassword(): void
     {
         $loadView =   new ConfigView("adms/Views/login/updatePassword", $this->data);
-        $loadView->loadView();
+        $loadView->loadViewLogin();
     }
 }
