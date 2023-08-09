@@ -14,7 +14,11 @@ foreach($this->data['listUsers'] as $user){
         extract($user);
     echo "ID: " . $id. "<br>";
     echo "Name: " . $name. "<br>";
-    echo "Email: " . $email. "<br><hr>";
+    echo "Email: " . $email. "<br>";
+
+
+    echo "<a href='".URLADM."view-users/index/$id'>Visualizar</a></br>";
+    echo "<hr>";
   
 
 }

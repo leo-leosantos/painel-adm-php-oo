@@ -12,10 +12,11 @@ use App\Adms\Models\helper\AdmsValEmailSingle;
 use App\Adms\Models\helper\AdmsValPassword;
 use App\Adms\Models\helper\AdmsValUserSingleLogin;
 
-class AdmsListUsers
+class AdmsViewUser
 {
     private bool $result;
-    private ?array $resultBd;
+    private ?array $resultBd = [];
+    private ?string $id;
 
     function getResult(): bool
     {
@@ -27,17 +28,25 @@ class AdmsListUsers
         return $this->resultBd;
     }
 
-    public function listUsers(): void
+    public function viewUser( ?string $id = null): void
     {
-        $listUsers =   new AdmsRead();
-        $listUsers->fullRead("SELECT id, name, email FROM adms_users ORDER BY id DESC");
+        $this->id = $id;
 
-        $this->resultBd =  $listUsers->getResult();
+       // var_dump($this->id);
+        $viewUser =   new AdmsRead();
+        $viewUser->fullRead("SELECT id, name, email, nickname, user, image, created, modified
+                        FROM adms_users 
+                        WHERE id=:id
+                        LIMIT :limit", "id={$this->id}&limit=1");
+
+
+        $this->resultBd =  $viewUser->getResult();
+        // var_dump($this->resultBd);
 
         if ($this->resultBd) {
             $this->result = true;
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00'>Nenhum ususer encontrado</p>";
+            $_SESSION['msg'] = "<p style='color: #f00'>Nenhum user encontrado</p>";
             $this->result = false;
         }
     }

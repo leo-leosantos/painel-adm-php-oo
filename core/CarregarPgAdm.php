@@ -8,7 +8,7 @@ class CarregarPgAdm  extends Config
 {
     private string $urlController;
     private string $urlMetodo;
-    private string $urlParameter;
+    private ?string $urlParameter;
     private string $classLoad;
     private array $listPgPublic;
     private array $listPgPrivate;
@@ -38,7 +38,7 @@ class CarregarPgAdm  extends Config
     {
         $classLoad = new $this->classLoad();
         if (method_exists($classLoad, $this->urlMetodo)) {
-            $classLoad->{$this->urlMetodo}();
+            $classLoad->{$this->urlMetodo}($this->urlParameter);
         } else {
             die("Could not load class metodo not found" . EMAILADMIN);
         }
