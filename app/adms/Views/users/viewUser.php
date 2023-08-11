@@ -12,9 +12,11 @@ if(!empty($this->data['viewUser'][0]) ){
 
     echo "id: $id <br>";
     echo "Email: $email <br>";
-    echo "Nome: $name <br>";   
+    echo "Nome: $name_usr <br>";   
     echo "Apelido: $nickname <br>";
     echo "image: $image <br>";
+    echo "Situação: <span style='color:$color'>$name_sit</span> <br>";
+
     echo "Criado: ". date('d-m-Y H:i:s', strtotime($created))." <br>";
 
     if(!empty($modified)){

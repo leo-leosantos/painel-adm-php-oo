@@ -3,6 +3,9 @@
 
 echo "<h2>List User</h2>";
 
+echo "<a href='".URLADM."add-users/index/'>Cadastrar</a></br>";
+echo "<br>";
+echo "<hr>";
 
 if(isset($_SESSION['msg'])){
     echo $_SESSION['msg'];
@@ -18,7 +21,9 @@ foreach($this->data['listUsers'] as $user){
 
 
     echo "<a href='".URLADM."view-users/index/$id'>Visualizar</a></br>";
+    echo "<a href='".URLADM."edit-users/index/$id'>Editar</a></br>";
+    
     echo "<hr>";
-  
 
 }
+

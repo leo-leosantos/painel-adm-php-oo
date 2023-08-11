@@ -58,12 +58,12 @@ class CarregarPgAdm  extends Config
 
     private function pgPrivate(): void
     {
-        $this->listPgPrivate = ["Dashboard", "ListUsers","ViewUsers"];
+        $this->listPgPrivate = ["Dashboard", "ListUsers","ViewUsers","AddUsers","EditUsers"];
 
         if (in_array($this->urlController, $this->listPgPrivate)) {
             $this->verifyLogin();
         } else {
-            $_SESSION['msg'] = "Error: Pagina não  encontrada";
+            $_SESSION['msg'] = "Error: Pagina não  encontrada pgprivate";
             $urlRedirect =  URLADM . "login/index";
             header("Location: " . $urlRedirect);
         }

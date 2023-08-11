@@ -105,14 +105,12 @@ class AdmsNewUser
 
         $this->data['created'] = date("Y-m-d H:i:s");
 
-        // var_dump($this->data);
-
         $createUser   =  new AdmsCreate();
         $createUser->exeCreate('adms_users', $this->data);
 
         if ($createUser->getResult()) {
-            // $_SESSION['msg'] = "Add new user successfully";
-            // $this->result = true;
+            $_SESSION['msg'] = "Add new user successfully";
+            $this->result = true;
             $this->sendEmail();
         } else {
             $_SESSION['msg'] = "Add new user error";
