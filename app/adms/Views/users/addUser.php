@@ -33,6 +33,5 @@ if(isset($this->data['form'])){
 <button type="submit" name="SendAddNewUser" value="Cadastrar">Cadastrar</button>
 </form>
 
-<br><br>
-<p><a href="<?= URLADM ?>login/index">Clique aqui</a>Para acessar</p>
+
 

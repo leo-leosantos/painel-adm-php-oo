@@ -11,7 +11,10 @@ if(isset($this->data['form'][0])){
 ?>
 <h1>Editar  Usuario</h1>
 
-<?php if(isset($_SESSION['msg'])){
+<?php 
+
+
+if(isset($_SESSION['msg'])){
     echo $_SESSION['msg'];
     unset($_SESSION['msg']);
 } ?>
@@ -19,6 +22,7 @@ if(isset($this->data['form'][0])){
 <span id="msg"></span>
 <form action="" method="post" id="form-add-user">
 
+<input type="hidden" name="id" id="id"  value="<?php if(isset($valorForm['id'])) {echo $valorForm['id'];}    ?>"><br><br>
 <label for="">Nome</label>
 <input type="text" name="name" id="name" required placeholder="Digite o Nome completo" value="<?php if(isset($valorForm['name'])) {echo $valorForm['name'];}    ?>"><br><br>
 
@@ -38,9 +42,8 @@ if(isset($this->data['form'][0])){
 
 
 <span id="msgViewStrength"></span><br>
-<button type="submit" name="SendAddNewUser" value="Cadastrar">Cadastrar</button>
+<button type="submit" name="SendEditUser" value="Editar">EDITAR</button>
 </form>
 
 <br><br>
-<p><a href="<?= URLADM ?>login/index">Clique aqui</a>Para acessar</p>
 
