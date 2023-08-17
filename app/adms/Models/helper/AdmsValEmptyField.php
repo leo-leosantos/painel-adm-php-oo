@@ -22,7 +22,7 @@ class AdmsValEmptyField
         $this->data = array_map('trim', $this->data);
 
         if(in_array('',$this->data )){
-            $_SESSION['msg'] =  "<strong> Error favor precnher o email </strong>";
+            $_SESSION['msg'] =  "<strong> Error favor precnher todos os campos </strong>";
             $this->result = false;
 
         }else{

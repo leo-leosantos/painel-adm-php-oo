@@ -14,7 +14,7 @@ use App\Adms\Models\helper\AdmsValPassword;
 use App\Adms\Models\helper\AdmsValUserSingle;
 use App\Adms\Models\helper\AdmsValUserSingleLogin;
 
-class AdmsEditUser
+class AdmsEditUserPassword
 {
     private bool $result;
     private ?array $resultBd = [];
@@ -37,10 +37,10 @@ class AdmsEditUser
         $this->id = $id;
         $viewUser =   new AdmsRead();
         $viewUser->fullRead(
-            "SELECT id, name , email, nickname, user
-                            FROM adms_users 
-                            WHERE id=:id
-                            LIMIT :limit",
+            "SELECT id
+                    FROM adms_users 
+                    WHERE id=:id
+                    LIMIT :limit",
             "id={$this->id}&limit=1"
         );
         $this->resultBd =  $viewUser->getResult();
@@ -57,17 +57,13 @@ class AdmsEditUser
     {
 
         $this->data = $data;
-        $this->dataExitVal['nickname'] = $this->data['nickname'];
       
-
-        unset($this->data['nickname']);
-
         $valEmptyField   = new AdmsValEmptyField();
         $valEmptyField->valField($this->data);
 
         if ($valEmptyField->getResult()) {
-            $this->valInput();
-            $this->result = true;
+           $this->valInput(); 
+
 
         } else {
             $this->result = false;
@@ -77,37 +73,32 @@ class AdmsEditUser
 
     private function valInput(): void
     {
-        $valEmail  = new AdmsValEmail();
-        $valEmail->validateEmail($this->data['email']);
+        $valPassword = new AdmsValPassword();
+        $valPassword->validatePassword($this->data['password']);
 
-        $valEmailSingle = new AdmsValEmailSingle();
-        $valEmailSingle->validateEmailSingle($this->data['email'], true, $this->data['id']);
 
-        $valUserSingle = new AdmsValUserSingle();
-        $valUserSingle->validateUserSingle($this->data['user'], true, $this->data['id']);
-
-        if ($valEmail->getResult() and $valEmailSingle->getResult() and $valUserSingle->getResult()) {
-            $this->edit();
+        if ($valPassword->getResult() ) {
+            $this->editPass();
         } else {
             $this->result = false;
         }
     }
 
 
-    private function edit(): void
+    private function editPass(): void
     {
         
         $this->data['modified'] =  date("Y-m-d H:i:s");
-        $this->data['nickname'] = $this->dataExitVal['nickname'];
+        $this->data['password'] = password_hash($this->data['password'], PASSWORD_DEFAULT);
      
         $upUser =   new AdmsUpdate();
         $upUser->exeUpdate("adms_users", $this->data, "WHERE id=:id", "id={$this->data['id']}");
 
         if ($upUser->getResult()) {
-            $_SESSION['msg'] = "User Edit sucessfully";
+            $_SESSION['msg'] = "User  Password Edit sucessfully";
             $this->result = true;
         } else {
-            $_SESSION['msg'] = "ERRROR EDIT USER";
+            $_SESSION['msg'] = "ERRROR EDIT USER Password";
 
             $this->result = false;
         }

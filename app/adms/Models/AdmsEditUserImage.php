@@ -14,7 +14,7 @@ use App\Adms\Models\helper\AdmsValPassword;
 use App\Adms\Models\helper\AdmsValUserSingle;
 use App\Adms\Models\helper\AdmsValUserSingleLogin;
 
-class AdmsEditUser
+class AdmsEditUserImage
 {
     private bool $result;
     private ?array $resultBd = [];
@@ -32,18 +32,18 @@ class AdmsEditUser
         return $this->resultBd;
     }
 
-    public function viewUser(?string $id = null): void
+    public function editUserImage(?string $id = null): void
     {
         $this->id = $id;
-        $viewUser =   new AdmsRead();
-        $viewUser->fullRead(
-            "SELECT id, name , email, nickname, user
+        $editImage =   new AdmsRead();
+        $editImage->fullRead(
+            "SELECT id, image
                             FROM adms_users 
                             WHERE id=:id
                             LIMIT :limit",
             "id={$this->id}&limit=1"
         );
-        $this->resultBd =  $viewUser->getResult();
+        $this->resultBd =  $editImage->getResult();
         if ($this->resultBd) {
             $this->result = true;
         } else {
@@ -57,21 +57,19 @@ class AdmsEditUser
     {
 
         $this->data = $data;
-        $this->dataExitVal['nickname'] = $this->data['nickname'];
-      
+        var_dump($this->data);
+        $this->result = false;
 
-        unset($this->data['nickname']);
+        // $valEmptyField   = new AdmsValEmptyField();
+        // $valEmptyField->valField($this->data);
 
-        $valEmptyField   = new AdmsValEmptyField();
-        $valEmptyField->valField($this->data);
+        // if ($valEmptyField->getResult()) {
+        //     $this->valInput();
+        //     $this->result = true;
 
-        if ($valEmptyField->getResult()) {
-            $this->valInput();
-            $this->result = true;
-
-        } else {
-            $this->result = false;
-        }
+        // } else {
+        //     $this->result = false;
+        // }
     }
 
 
