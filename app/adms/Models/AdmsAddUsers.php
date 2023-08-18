@@ -4,6 +4,7 @@
 namespace App\Adms\Models;
 
 use App\Adms\Models\helper\AdmsCreate;
+use App\Adms\Models\helper\AdmsRead;
 use App\Adms\Models\helper\AdmsValEmail;
 use App\Adms\Models\helper\AdmsSendEMail;
 use App\Adms\Models\helper\AdmsValPassword;
@@ -21,6 +22,7 @@ class AdmsAddUsers
     private string $firstName;
     private array $emailData;
     private string $url;
+    private array $listRegistryAdd;
 
     function getResult()
     {
@@ -84,5 +86,18 @@ class AdmsAddUsers
 
             $this->result = false;
         }
+    }
+
+    public function listSelect(): array
+    {
+        $list = new AdmsRead();
+
+        $list->fullRead("SELECT id id_sit, name name_sit FROM adms_sists_users ORDER BY name ASC");
+        $registry['sit'] =   $list->getResult();
+
+        
+        $this->listRegistryAdd = ['sit'=> $registry['sit']];
+
+        return $this->listRegistryAdd;
     }
 }

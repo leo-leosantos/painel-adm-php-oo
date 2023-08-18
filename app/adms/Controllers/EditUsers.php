@@ -18,18 +18,14 @@ class EditUsers
   {
 
     $this->dataForm =  filter_input_array(INPUT_POST, FILTER_DEFAULT);
-    // var_dump( $this->dataForm);
 
 
     if ((!empty($id)) and (empty($this->dataForm['SendEditUser']))) {
       $this->id = (int) $id;
-      // var_dump( $this->dataForm);
-
       $viewUser =   new  AdmsEditUser();
       $viewUser->viewUser($this->id);
       if ($viewUser->getResult()) {
         $this->data['form'] =  $viewUser->getResultBd();
-        //  var_dump( $this->dataForm);
 
         $this->viewEditNewUser();
       } else {
@@ -37,10 +33,7 @@ class EditUsers
         header("Location: " . $urlRedirect);
       }
     } else {
-      // $_SESSION['msg'] = "<p style='color: #f00'>Nenhum user encontrado</p>";
-      // $urlRedirect =  URLADM . "list-users/index";
-      // header("Location: " . $urlRedirect);
-      // var_dump( $this->dataForm);
+     
 
       $this->editUser();
     }
@@ -74,6 +67,10 @@ class EditUsers
 
   private function viewEditNewUser(): void
   {
+
+    $listSelect =     new AdmsEditUser();
+    $this->data['select'] = $listSelect->listSelect();
+
     $loadView =   new ConfigView("adms/Views/users/editUser", $this->data);
     $loadView->loadView();
   }

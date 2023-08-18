@@ -21,6 +21,8 @@ class AdmsEditUser
     private ?array $data;
     private ?array $dataExitVal;
     private ?string $id;
+    private array $listRegistryAdd;
+
 
     function getResult(): bool
     {
@@ -37,7 +39,7 @@ class AdmsEditUser
         $this->id = $id;
         $viewUser =   new AdmsRead();
         $viewUser->fullRead(
-            "SELECT id, name , email, nickname, user
+            "SELECT id, name , email, nickname, user, adms_sits_user_id
                             FROM adms_users 
                             WHERE id=:id
                             LIMIT :limit",
@@ -112,4 +114,17 @@ class AdmsEditUser
             $this->result = false;
         }
     }
+    public function listSelect(): array
+    {
+        $list = new AdmsRead();
+
+        $list->fullRead("SELECT id id_sit, name name_sit FROM adms_sists_users ORDER BY name ASC");
+        $registry['sit'] =   $list->getResult();
+
+        
+        $this->listRegistryAdd = ['sit'=> $registry['sit']];
+
+        return $this->listRegistryAdd;
+    }
+
 }

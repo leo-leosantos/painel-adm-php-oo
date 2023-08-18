@@ -120,6 +120,13 @@ if(FormAddUser){
             document.getElementById("msg").innerHTML = "<p> error: campo user requeried!</p>"
                 return;
         }
+
+        var user = document.querySelector("#adms_sits_user_id").value;
+        if(adms_sits_user_id === ""){
+            e.preventDefault();
+            document.getElementById("msg").innerHTML = "<p> error: campo adms_sits_user_id requeried!</p>"
+                return;
+        }
         var password = document.querySelector("#password").value;
         if(password === ""){
             e.preventDefault();

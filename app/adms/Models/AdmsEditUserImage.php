@@ -6,10 +6,13 @@ namespace App\Adms\Models;
 use App\Adms\Models\helper\AdmsCreate;
 use App\Adms\Models\helper\AdmsRead;
 use App\Adms\Models\helper\AdmsSendEMail;
+use App\Adms\Models\helper\AdmsSlug;
 use App\Adms\Models\helper\AdmsUpdate;
+use App\Adms\Models\helper\AdmsUpload;
 use App\Adms\Models\helper\AdmsValEmail;
 use App\Adms\Models\helper\AdmsValEmptyField;
 use App\Adms\Models\helper\AdmsValEmailSingle;
+use App\Adms\Models\helper\AdmsValExtImage;
 use App\Adms\Models\helper\AdmsValPassword;
 use App\Adms\Models\helper\AdmsValUserSingle;
 use App\Adms\Models\helper\AdmsValUserSingleLogin;
@@ -24,6 +27,7 @@ class AdmsEditUserImage
     private ?string $directory;
 
     private  string $delImage;
+    private  string $nameImg;
 
     function getResult(): bool
     {
@@ -54,7 +58,6 @@ class AdmsEditUserImage
             $_SESSION['msg'] = "<p style='color: #f00'>Nenhum user encontrado</p>";
             $this->result = false;
             return false;
-
         }
     }
 
@@ -67,70 +70,66 @@ class AdmsEditUserImage
         $this->dataImage = $this->data['new_image'];
 
         unset($this->data['new_image']);
-        var_dump($this->data);
 
-         $valEmptyField   = new AdmsValEmptyField();
-         $valEmptyField->valField($this->data);
+        $valEmptyField   = new AdmsValEmptyField();
+        $valEmptyField->valField($this->data);
 
-         if ($valEmptyField->getResult()) {
-            if(!empty($this->dataImage['name'])){
+        if ($valEmptyField->getResult()) {
+            if (!empty($this->dataImage['name'])) {
                 $this->valInput();
-               //$this->result = false;
+                //$this->result = false;
 
-            }else{
+            } else {
                 $_SESSION['msg'] = "<p style='color: #f00'>Error nexessario selcionar imge linha 75 </p>";
 
                 $this->result = false;
             }
-
-         } else {
+        } else {
             $this->result = false;
-         }
+        }
     }
 
 
     private function valInput(): void
     {
-        if($this->editUserImage($this->data['id'])){
+
+        $valExtImg  = new AdmsValExtImage();
+        $valExtImg->validateExtImg($this->dataImage['type']);
+        if (($this->editUserImage($this->data['id'])) and ($valExtImg->getResult())) {
+            $this->result = false;
 
             $this->upload();
-            $this->result = false;
-        }else{
+        } else {
 
-            $_SESSION['msg'] = "<p style='color: #f00'>Error Usuario nao encotrando 95 </p>";
             $this->result = false;
-
         }
-
-       
     }
 
 
     private function upload(): void
     {
-         $this->directory =   "app/adms/assets/image/users/".$this->data['id']. "/";
+        $slugImg   = new AdmsSlug();
+        $this->nameImg = $slugImg->slug($this->dataImage['name']);
 
-         if(  (!file_exists($this->directory))  and (!is_dir($this->directory))){
-            mkdir($this->directory, 0755);
-         }
 
-         if(move_uploaded_file($this->dataImage['tmp_name'], $this->directory . $this->dataImage['name'])){
+        $this->directory =   "app/adms/assets/image/users/" . $this->data['id'] . "/";
+
+        $uploadImg  =  new AdmsUpload();
+        $uploadImg->upload($this->directory, $this->dataImage['tmp_name'], $this->nameImg);
+
+        if ($uploadImg->getResult()) {
             $this->edit();
-           // $this->result = false;
-
-         }else{
-            $_SESSION['msg'] = "<p style='color: #f00'>Error no upload 118 </p>";
+        } else {
             $this->result = false;
-         }
-
+        }
     }
     private function edit(): void
     {
-        
-        $this->data['image'] = $this->dataImage['name'];
+
+        $this->data['image'] = $this->nameImg;
 
         $this->data['modified'] =  date("Y-m-d H:i:s");
-     
+
         $upUser =   new AdmsUpdate();
         $upUser->exeUpdate("adms_users", $this->data, "WHERE id=:id", "id={$this->data['id']}");
 
@@ -145,15 +144,15 @@ class AdmsEditUserImage
 
     private function deleteImage(): void
     {
-        if( ((! empty($this->resultBd[0]['image'])) or ($this->resultBd[0]['image'] != null  ))  and ( $this->resultBd[0]['image'] != $this->dataImage['name']) )  {
-            $this->delImage = "app/adms/assets/image/users/".$this->data['id']. "/" . $this->resultBd[0]['image'];
+        if (((!empty($this->resultBd[0]['image'])) or ($this->resultBd[0]['image'] != null))  and ($this->resultBd[0]['image'] != $this->nameImg)) {
+            $this->delImage = "app/adms/assets/image/users/" . $this->data['id'] . "/" . $this->resultBd[0]['image'];
 
-            if(file_exists($this->delImage)){
+            if (file_exists($this->delImage)) {
                 unlink($this->delImage);
             }
         }
-      
+
         $_SESSION['msg'] = "User Edit Image sucessfully link 153";
-        $this->result = false;
+        $this->result = true;
     }
 }
