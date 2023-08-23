@@ -23,9 +23,14 @@ if(isset($_SESSION['msg'])){
     echo "Email: $email <br>";
     echo "Nome: $name_usr <br>";   
     echo "Apelido: $nickname <br>";
-    echo "image: $image <br>";
     echo "Situação: <span style='color:$color'>$name_sit</span> <br>";
-
+    if((!empty($image)) 
+        and (file_exists("app/adms/assets/image/users/$id/$image")))
+    {
+            echo  "<img src='".URLADM."app/adms/assets/image/users/$id/$image' width='100' height='100'><br><br>";
+    }else{
+        echo  "<img src='".URLADM."app/adms/assets/image/users/user_icon.jpg' width='100' height='100'><br><br>";
+    }
     echo "Criado: ". date('d-m-Y H:i:s', strtotime($created))." <br>";
 
     if(!empty($modified)){

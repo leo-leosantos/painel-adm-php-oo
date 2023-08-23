@@ -58,6 +58,7 @@ class AdmsDelete extends AdmsConn
     private function connection(): void
     {
         $this->conn = $this->connectDb();
+
         $this->delete  =  $this->conn->prepare($this->query);
     }
 }
