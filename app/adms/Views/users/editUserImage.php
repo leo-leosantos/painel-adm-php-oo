@@ -23,7 +23,7 @@ if(isset($_SESSION['msg'])){
 <form action="" method="post" id="form-add-user" enctype="multipart/form-data">
 
 <input type="hidden" name="id" id="id"  value="<?php if(isset($valorForm['id'])) {echo $valorForm['id'];}    ?>"><br><br>
-<label for="">Image</label>
+<label for="">Image 300x300</label>
 <input type="file" name="new_image" id="image"><br><br>
 
 

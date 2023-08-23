@@ -9,6 +9,7 @@ use App\Adms\Models\helper\AdmsSendEMail;
 use App\Adms\Models\helper\AdmsSlug;
 use App\Adms\Models\helper\AdmsUpdate;
 use App\Adms\Models\helper\AdmsUpload;
+use App\Adms\Models\helper\AdmsUploadImgRes;
 use App\Adms\Models\helper\AdmsValEmail;
 use App\Adms\Models\helper\AdmsValEmptyField;
 use App\Adms\Models\helper\AdmsValEmailSingle;
@@ -114,10 +115,14 @@ class AdmsEditUserImage
 
         $this->directory =   "app/adms/assets/image/users/" . $this->data['id'] . "/";
 
-        $uploadImg  =  new AdmsUpload();
-        $uploadImg->upload($this->directory, $this->dataImage['tmp_name'], $this->nameImg);
+        // $uploadImg  =  new AdmsUpload();
+        // $uploadImg->upload($this->directory, $this->dataImage['tmp_name'], $this->nameImg);
 
-        if ($uploadImg->getResult()) {
+        $uploadImgRes   = new AdmsUploadImgRes();
+        $uploadImgRes->upload($this->dataImage, $this->directory, $this->nameImg, 300,300 );
+
+
+        if ($uploadImgRes->getResult()) {
             $this->edit();
         } else {
             $this->result = false;
