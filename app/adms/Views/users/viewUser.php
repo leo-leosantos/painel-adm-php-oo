@@ -29,7 +29,7 @@ if(isset($_SESSION['msg'])){
     {
             echo  "<img src='".URLADM."app/adms/assets/image/users/$id/$image' width='100' height='100'><br><br>";
     }else{
-        echo  "<img src='".URLADM."app/adms/assets/image/users/user_icon.jpg' width='100' height='100'><br><br>";
+        echo  "<img src='".URLADM."app/adms/assets/image/users/user.png' width='100' height='100'><br><br>";
     }
     echo "Criado: ". date('d-m-Y H:i:s', strtotime($created))." <br>";
 

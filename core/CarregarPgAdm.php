@@ -59,7 +59,7 @@ class CarregarPgAdm  extends Config
     private function pgPrivate(): void
     {
         $this->listPgPrivate = ["Dashboard", "ListUsers","ViewUsers","AddUsers","EditUsers","EditUsersPassword",
-            "EditUsersImage","DeleteUsers", "ViewProfile"];
+            "EditUsersImage","DeleteUsers", "ViewProfile","EditProfile"];
 
         if (in_array($this->urlController, $this->listPgPrivate)) {
             $this->verifyLogin();
