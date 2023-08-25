@@ -5,7 +5,7 @@ namespace App\Adms\Models;
 
 use App\Adms\Models\helper\AdmsRead;
 
-class AdmsLogin 
+class AdmsLogin
 {
 
     private ?array $data;
@@ -23,10 +23,12 @@ class AdmsLogin
         $this->data = $data;
         $viewUser  =  new  AdmsRead();
 
-        $viewUser->fullRead("SELECT id, name, nickname, email, password, image, adms_sits_user_id FROM adms_users 
-                                WHERE user =:user  OR email =:email LIMIT :limit", 
-                                "user={$this->data['user']}&email={$this->data['user']}&limit=1");
-     
+        $viewUser->fullRead(
+            "SELECT id, name, nickname, email, password, image, adms_sits_user_id FROM adms_users 
+                                WHERE user =:user  OR email =:email LIMIT :limit",
+            "user={$this->data['user']}&email={$this->data['user']}&limit=1"
+        );
+
 
         $this->resultDb = $viewUser->getResult();
 
@@ -38,21 +40,20 @@ class AdmsLogin
         }
     }
 
-    private function valEmailPerm(): void 
+    private function valEmailPerm(): void
     {
-        if($this->resultDb[0]['adms_sits_user_id'] == 1)
-        {
+        if ($this->resultDb[0]['adms_sits_user_id'] == 1) {
             $this->valPassword();
-        }elseif($this->resultDb[0]['adms_sits_user_id'] == 3){
-            $_SESSION['msg'] = "Nexessari confirm email. SOlicite um um novo link <a href = '".URLADM."new-conf-email/index'>Clique aqui</a>";
+        } elseif ($this->resultDb[0]['adms_sits_user_id'] == 3) {
+            $_SESSION['msg'] = "Nexessari confirm email. SOlicite um um novo link <a href = '" . URLADM . "new-conf-email/index'>Clique aqui</a>";
             $this->result = false;
-          }elseif($this->resultDb[0]['adms_sits_user_id'] == 5){
+        } elseif ($this->resultDb[0]['adms_sits_user_id'] == 5) {
             $_SESSION['msg'] = "Email descastratado";
             $this->result = false;
-        }elseif($this->resultDb[0]['adms_sits_user_id'] == 2){
+        } elseif ($this->resultDb[0]['adms_sits_user_id'] == 2) {
             $_SESSION['msg'] = "Email inativo";
             $this->result = false;
-        }else{
+        } else {
             $_SESSION['msg'] = "Email inativo";
             $this->result = false;
         }

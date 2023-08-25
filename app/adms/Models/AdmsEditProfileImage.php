@@ -18,13 +18,12 @@ use App\Adms\Models\helper\AdmsValPassword;
 use App\Adms\Models\helper\AdmsValUserSingle;
 use App\Adms\Models\helper\AdmsValUserSingleLogin;
 
-class AdmsEditUserImage
+class AdmsEditProfileImage
 {
     private bool $result;
     private ?array $resultBd = [];
     private ?array $data;
     private ?array $dataImage;
-    private ?string $id;
     private ?string $directory;
 
     private  string $delImage;
@@ -40,16 +39,15 @@ class AdmsEditUserImage
         return $this->resultBd;
     }
 
-    public function editUserImage(?string $id = null): bool
+    public function editProfileImage(): bool
     {
-        $this->id = $id;
         $editImage =   new AdmsRead();
         $editImage->fullRead(
             "SELECT id, image
                             FROM adms_users 
                             WHERE id=:id
                             LIMIT :limit",
-            "id={$this->id}&limit=1"
+            "id=" . $_SESSION['user_id'] . "&limit=1"
         );
         $this->resultBd =  $editImage->getResult();
         if ($this->resultBd) {
@@ -78,10 +76,8 @@ class AdmsEditUserImage
         if ($valEmptyField->getResult()) {
             if (!empty($this->dataImage['name'])) {
                 $this->valInput();
-                //$this->result = false;
-
             } else {
-                $_SESSION['msg'] = "<p style='color: #f00'>Error nexessario selcionar imge linha 75 </p>";
+                $_SESSION['msg'] = "<p style='color: #f00'>Error necessario selecionar image linha 83 </p>";
 
                 $this->result = false;
             }
@@ -96,7 +92,8 @@ class AdmsEditUserImage
 
         $valExtImg  = new AdmsValExtImage();
         $valExtImg->validateExtImg($this->dataImage['type']);
-        if (($this->editUserImage($this->data['id'])) and ($valExtImg->getResult())) {
+
+        if (($this->editProfileImage()) and ($valExtImg->getResult())) {
 
             $this->upload();
         } else {
@@ -112,13 +109,11 @@ class AdmsEditUserImage
         $this->nameImg = $slugImg->slug($this->dataImage['name']);
 
 
-        $this->directory =   "app/adms/assets/image/users/" . $this->data['id'] . "/";
+        $this->directory =   "app/adms/assets/image/users/" . $_SESSION['user_id'] . "/";
 
-        // $uploadImg  =  new AdmsUpload();
-        // $uploadImg->upload($this->directory, $this->dataImage['tmp_name'], $this->nameImg);
 
         $uploadImgRes   = new AdmsUploadImgRes();
-        $uploadImgRes->upload($this->dataImage, $this->directory, $this->nameImg, 300,300 );
+        $uploadImgRes->upload($this->dataImage, $this->directory, $this->nameImg, 300, 300);
 
 
         if ($uploadImgRes->getResult()) {
@@ -131,16 +126,16 @@ class AdmsEditUserImage
     {
 
         $this->data['image'] = $this->nameImg;
-
         $this->data['modified'] =  date("Y-m-d H:i:s");
 
         $upUser =   new AdmsUpdate();
-        $upUser->exeUpdate("adms_users", $this->data, "WHERE id=:id", "id={$this->data['id']}");
+        $upUser->exeUpdate("adms_users", $this->data, "WHERE id=:id", "id=" . $_SESSION['user_id']);
 
         if ($upUser->getResult()) {
+            $_SESSION['user_image'] = $this->nameImg;
             $this->deleteImage();
         } else {
-            $_SESSION['msg'] = "ERRROR EDIT IMAGE USER";
+            $_SESSION['msg'] = "ERRROR EDIT IMAGE USER PERFIl";
 
             $this->result = false;
         }
@@ -149,14 +144,14 @@ class AdmsEditUserImage
     private function deleteImage(): void
     {
         if (((!empty($this->resultBd[0]['image'])) or ($this->resultBd[0]['image'] != null))  and ($this->resultBd[0]['image'] != $this->nameImg)) {
-            $this->delImage = "app/adms/assets/image/users/" . $this->data['id'] . "/" . $this->resultBd[0]['image'];
+            $this->delImage = "app/adms/assets/image/users/" . $_SESSION['user_id'] . "/" . $this->resultBd[0]['image'];
 
             if (file_exists($this->delImage)) {
                 unlink($this->delImage);
             }
         }
 
-        $_SESSION['msg'] = "User Edit Image sucessfully link 153";
+        $_SESSION['msg'] = "User Edit Image sucessfully  PERFIL link 153";
         $this->result = true;
     }
 }

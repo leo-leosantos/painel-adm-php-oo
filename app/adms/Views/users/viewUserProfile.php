@@ -14,6 +14,8 @@ if(!empty($this->data['viewProfile'][0]) ){
     extract($this->data['viewProfile'][0]);
     
     echo "<a href='". URLADM. "edit-profile/index'>Editar Perfil</a></br>";
+    echo "<a href='". URLADM. "edit-profile-password/index'>Editar Senha</a></br>";
+    echo "<a href='". URLADM. "edit-profile-image/index'>Editar Image</a></br>";
 
 
     if((!empty($image)) 
