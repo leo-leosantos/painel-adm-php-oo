@@ -18,24 +18,24 @@ class EditUsersImage
   public function index(?string $id = null): void
   {
 
-    $this->dataForm =  filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $this->dataForm = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
 
     if ((!empty($id)) and (empty($this->dataForm['SendEditUserImage']))) {
       $this->id = (int) $id;
 
-      $editImage =   new  AdmsEditUserImage();
+      $editImage = new AdmsEditUserImage();
       $editImage->editUserImage($this->id);
       if ($editImage->getResult()) {
-        $this->data['form'] =  $editImage->getResultBd();
+        $this->data['form'] = $editImage->getResultBd();
 
         $this->viewEditUserImage();
       } else {
-        $urlRedirect =  URLADM . "list-users/index";
+        $urlRedirect = URLADM . "list-users/index";
         header("Location: " . $urlRedirect);
       }
     } else {
-      
+
       $this->editUserImage();
     }
   }
@@ -49,13 +49,13 @@ class EditUsersImage
     if (!empty($this->dataForm['SendEditUserImage'])) {
       unset($this->dataForm['SendEditUserImage']);
 
-      $this->dataForm['new_image'] =  $_FILES['new_image'] ? $_FILES['new_image'] : null  ;
+      $this->dataForm['new_image'] = $_FILES['new_image'] ? $_FILES['new_image'] : null;
 
-      $editUserImage =  new AdmsEditUserImage();
+      $editUserImage = new AdmsEditUserImage();
       $editUserImage->update($this->dataForm);
 
       if ($editUserImage->getResult()) {
-        $urlRedirect =  URLADM . "view-users/index/".$this->dataForm['id'];
+        $urlRedirect = URLADM . "view-users/index/" . $this->dataForm['id'];
         header("Location: " . $urlRedirect);
       } else {
         $this->data['form'] = $this->dataForm;
@@ -64,7 +64,7 @@ class EditUsersImage
       }
     } else {
       $_SESSION['msg'] = "<p style='color: #f00'>Nenhum user encontrado</p>";
-      $urlRedirect =  URLADM . "list-users/index";
+      $urlRedirect = URLADM . "list-users/index";
       header("Location: " . $urlRedirect);
     }
   }
@@ -72,7 +72,7 @@ class EditUsersImage
 
   private function viewEditUserImage(): void
   {
-    $loadView =   new ConfigView("adms/Views/users/editUserImage", $this->data);
+    $loadView = new ConfigView("adms/Views/users/editUserImage", $this->data);
     $loadView->loadView();
   }
 }

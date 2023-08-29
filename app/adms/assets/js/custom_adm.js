@@ -212,7 +212,7 @@ if(FormLogin){
     }
 
 
-    const FormEditUserPass = document.getElementById("form-edit-user-pass");
+const FormEditUserPass = document.getElementById("form-edit-user-pass");
 if(FormEditUserPass){
     FormEditUserPass.addEventListener("submit", async(e) => {
         var password = document.querySelector("#password").value;
@@ -240,3 +240,70 @@ if(FormEditUserPass){
         }
     });
 }
+
+const formEditProfImg = document.getElementById("form-edit-prof-img");
+if(FormEditUserPass){
+    formEditProfImg.addEventListener("submit", async(e) => {
+        var new_image = document.querySelector("#new_image").value;
+        if(new_image === ""){
+            e.preventDefault();
+            document.getElementById("msg").innerHTML = "<p> error: campo image requeried!</p>"
+                return;
+        }
+
+     
+    });
+}
+
+
+
+function inputFileValImg()
+{
+
+    var new_image = document.querySelector("#new_image");
+    var filePath = new_image.value;
+    var allwoedExtesions = /(\.jpg|\.jpeg|\.png)$/i;
+
+    if(!allwoedExtesions.exec(filePath)){
+        new_image.value = '';
+        document.getElementById("msg").innerHTML = "<p> error:  image png ou jpeg permitido!</p>"
+        return;
+    }else{
+        previewImage(new_image);
+        document.getElementById("msg").innerHTML = ""
+        return;
+    }
+
+
+}
+
+
+
+const formEditUserImage = document.getElementById("form-edit-user-img");
+if(formEditUserImage){
+    formEditUserImage.addEventListener("submit", async(e) => {
+        var new_image = document.querySelector("#new_image").value;
+        if(new_image === ""){
+            e.preventDefault();
+            document.getElementById("msg").innerHTML = "<p> error: campo image requeried!</p>"
+                return;
+        }
+
+     
+    });
+}
+
+
+
+function previewImage(new_image)
+{
+    if((new_image.files) && (new_image.files[0])){
+         var reader =   new FileReader();
+         reader.onload = function  (e){
+            document.getElementById('preview-img').innerHTML = "<img src='"+ e.target.result+"' alt='Image' style='width: 100px;'>";
+         }
+    }
+
+    reader.readAsDataURL(new_image.files[0]);
+}
+
