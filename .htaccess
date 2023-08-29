@@ -6,3 +6,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-lang
 
 RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+
+ErrorDocument 403 http://localhost/admin/
+
+Options -Indexes

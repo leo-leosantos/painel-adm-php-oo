@@ -2,7 +2,10 @@
 
 namespace Core;
 
-
+if(!defined('C8L6K7E')){
+    header("Location: http://localhost/admin/");
+    die('not found');
+}
 class ConfigView
 {
 

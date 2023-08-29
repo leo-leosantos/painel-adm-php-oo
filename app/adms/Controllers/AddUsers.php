@@ -2,6 +2,10 @@
 
 
 namespace App\Adms\Controllers;
+if(!defined('C8L6K7E')){
+  header("Location: http://localhost/admin/");
+ // die("Error: pagina not found");
+}
 
 use Core\ConfigView;
 use App\Adms\Models\AdmsAddUsers;

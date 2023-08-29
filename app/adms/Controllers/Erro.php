@@ -2,6 +2,9 @@
 
 
 namespace App\Adms\Controllers;
+if(!defined('C8L6K7E')){
+    header("Location: http://localhost/admin/");
+}
 
 use Core\ConfigView;
 

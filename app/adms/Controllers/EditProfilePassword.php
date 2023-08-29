@@ -3,6 +3,11 @@
 
 namespace App\Adms\Controllers;
 
+if(!defined('C8L6K7E')){
+  header("Location: http://localhost/admin/");
+}
+
+
 use Core\ConfigView;
 use App\Adms\Models\AdmsEditProfile;
 use App\Adms\Models\AdmsEditProfilePassword;

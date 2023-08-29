@@ -1,7 +1,10 @@
 <?php
 
 namespace Core;
-
+if(!defined('C8L6K7E')){
+    header("Location: http://localhost/admin/");
+    die('not found');
+}
 use Core\CarregarPgAdm;
 use App\Adms\Controllers\Error;
 use App\Adms\Controllers\Login;

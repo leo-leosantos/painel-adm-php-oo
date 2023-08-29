@@ -3,6 +3,10 @@
 
 namespace App\Adms\Controllers;
 
+if(!defined('C8L6K7E')){
+    header("Location: http://localhost/admin/");
+}
+
 use App\Adms\Models\AdmsConfEmail;
 
 class ConfEmail
