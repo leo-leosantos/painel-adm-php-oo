@@ -5,8 +5,8 @@ if(!defined('C8L6K7E')){
 }
 ?>
 
-<a href="<?php echo URLADM ; ?>dashboard/index">Dashboard</a><br>
-<a href="<?php echo URLADM ; ?>list-users/index">Usuarios</a><br>
-<a href="<?php echo URLADM ; ?>view-profile/index">Pefil</a><br>
-
-<a href="<?php echo URLADM ; ?>logout/index">Sair</a><br><br>
+<a href="<?= URLADM ; ?>dashboard/index">Dashboard</a><br>
+<a href="<?= URLADM ; ?>list-users/index">Usuarios</a><br>
+<a href="<?= URLADM ; ?>view-profile/index">Pefil</a><br>
+<a href="<?= URLADM ; ?>list-sits-users/index">Situações</a><br>
+<a href="<?= URLADM ; ?>logout/index">Sair</a><br><br>
