@@ -16,8 +16,9 @@ if(isset($_SESSION['msg'])){
 foreach($this->data['listUsers'] as $user){
         extract($user);
     echo "ID: " . $id. "<br>";
-    echo "Name: " . $name. "<br>";
+    echo "Name: " . $name_usr. "<br>";
     echo "Email: " . $email. "<br>";
+    echo "Situação:  <span style='color: $color'>$name_sit</span><br>";
 
 
     echo "<a href='".URLADM."view-users/index/$id'>Visualizar</a></br>";
