@@ -10,13 +10,16 @@ use Core\ConfigView;
 class ListUsers
 {
     private ?array $data;
-    public function index(): void
+    private ?string $page;
+
+    public function index(?string $page ): void
     {
+        $this->page =   (int) $page ? $page : 1;
 
-
+       // var_dump($this->page);
 
         $listUsers = new AdmsListUsers();
-        $listUsers->listUsers();
+        $listUsers->listUsers($this->page);
     
         if ($listUsers->getResult()) {
             $this->data['listUsers'] = $listUsers->getResultBd();

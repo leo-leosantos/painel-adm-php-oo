@@ -3,6 +3,7 @@
 
 namespace App\Adms\Models;
 
+use App\Adms\Models\helper\AdmsPagination;
 use App\Adms\Models\helper\AdmsRead;
 
 
@@ -10,6 +11,8 @@ class AdmsListUsers
 {
     private bool $result;
     private ?array $resultBd;
+    private ?int $page;
+    private int $limitResult = 4;
 
     function getResult(): bool
     {
@@ -21,8 +24,14 @@ class AdmsListUsers
         return $this->resultBd;
     }
 
-    public function listUsers(): void
+    public function listUsers(int $page = null): void
     {
+        $this->page =   (int) $page ? $page : 1;
+       // var_dump($this->page);      
+        $pagination =  new AdmsPagination(URLADM . 'list-users/index');
+        $pagination->condition($this->page, $this->limitResult);
+        $pagination->pagination("SELECT COUNT(usr.id) AS num_result FROM adms_users usr");
+
         $listUsers =   new AdmsRead();
         $listUsers->fullRead("SELECT usr.id, usr.name AS name_usr, usr.email , usr.adms_sits_user_id, 
                               sit.name AS name_sit,
