@@ -54,7 +54,7 @@ class AdmsListUsers
                               INNER JOIN  adms_sists_users AS sit ON sit.id=usr.adms_sits_user_id
                               INNER JOIN  adms_colors AS col ON col.id=sit.adms_color_id
                               ORDER BY usr.id ASC 
-                              LIMIT :limit OFFSET :offset", "limit={$this->limitResult}&offset={$pagination->offset()}");
+                              LIMIT :limit OFFSET :offset", "limit={$this->limitResult}&offset={$pagination->getOffset()}");
 
         $this->resultBd =  $listUsers->getResult();
 

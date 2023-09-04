@@ -21,6 +21,6 @@ foreach ($this->data['listSitsUsers'] as $sitUser) {
     echo "Nome: <span style='color: $color'>$name</span> <br>";
     echo "<a href='" . URLADM . "view-sits-users/index/$id'>Visualizar</a><br>";
     echo "<a href='" . URLADM . "edit-sits-users/index/$id'>Editar</a><br>";
-    echo "<a href='" . URLADM . "delete-sits-users/index/$id'>Apagar</a><br>";
+    echo "<a href='" . URLADM . "delete-sits-users/index/$id' >Apagar</a><br>";
     echo "<hr>";
 }

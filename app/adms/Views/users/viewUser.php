@@ -9,7 +9,7 @@ echo "<a href='".URLADM."list-users/index/'>Listar</a></br>";
 echo "<a href='".URLADM."edit-users/index/$id'>Editar</a></br>";
 echo "<a href='".URLADM."edit-users-password/index/$id'>Editar Senha</a></br>";
 echo "<a href='".URLADM."edit-users-image/index/$id'>Editar Image</a></br>";
-echo "<a href='".URLADM."delete-users/index/$id'>Apagar</a></br>";
+echo "<a href='".URLADM."delete-users/index/$id' onclick='return confirm(\"Tem certeza que excluir?\")'>Apagar</a></br>"; 
 
 if(isset($_SESSION['msg'])){
     echo $_SESSION['msg'];

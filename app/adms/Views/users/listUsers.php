@@ -26,9 +26,11 @@ foreach($this->data['listUsers'] as $user){
 
     echo "<a href='".URLADM."view-users/index/$id'>Visualizar</a></br>";
     echo "<a href='".URLADM."edit-users/index/$id'>Editar</a></br>";    
-    echo "<a href='".URLADM."delete-users/index/$id'>Apagar</a></br>";
+    echo "<a href='".URLADM."delete-users/index/$id' onclick='return confirm(\"Tem certeza que excluir?\")'>Apagar</a></br>"; 
+    // ?>
 
-    
+    // <a href="<?= URLADM.'delete-users/index/'.$id; ?>" onclick="return confirm('Excluir tem certeza ?')" >Apagar</a><br>
+    // <?php
     echo "<hr>";
 
 }

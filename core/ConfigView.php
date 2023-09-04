@@ -26,7 +26,6 @@ class ConfigView
             if(file_exists($file)){
                 include 'app/adms/Views/include/head.php';
                 include 'app/adms/Views/include/menu.php';
-
                 include $file;
                 include 'app/adms/Views/include/footer.php';
             }else{
@@ -39,9 +38,9 @@ class ConfigView
     {
         $file = 'app/' . $this->nameView .'.php';
             if(file_exists($file)){
-                include 'app/adms/Views/include/head.php';
+                include 'app/adms/Views/include/head_login.php';
                 include $file;
-                include 'app/adms/Views/include/footer.php';
+                include 'app/adms/Views/include/footer_login.php';
             }else{
                 die("Error view not found. Please to email for " . EMAILADMIN);
 

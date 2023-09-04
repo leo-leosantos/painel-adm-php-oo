@@ -22,7 +22,7 @@ foreach ($this->data['listColors'] as $colors) {
     echo "Cor: <span style='color: $color'>$color</span> <br>";
     echo "<a href='" . URLADM . "view-colors/index/$id'>Visualizar</a><br>";
     echo "<a href='" . URLADM . "edit-colors/index/$id'>Editar</a><br>";
-    echo "<a href='" . URLADM . "delete-colors/index/$id'>Apagar</a><br>";
+    echo "<a href='" . URLADM . "delete-colors/index/$id' onclick='return confirm(\"Tem certeza que excluir?\")>Apagar</a><br>";
     echo "<hr>";
 }
 
