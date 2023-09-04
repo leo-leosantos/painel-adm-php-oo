@@ -25,7 +25,7 @@ class AdmsPagination
 
 
 
-    function offset(): int
+    function getOffset(): int
     {
         return $this->offset;
     }
