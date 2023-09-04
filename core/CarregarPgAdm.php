@@ -23,17 +23,13 @@ class CarregarPgAdm  extends Config
         $this->urlMetodo = $urlMetodo;
         $this->urlParameter = $urlParameter;
 
-        //unset($_SESSION['user_id']);
 
         $this->pgPublic();
         if (class_exists($this->classLoad)) {
             $this->loadMetodo();
         } else {
             die("No class loaded. please Carregar PG ADM " . EMAILADMIN);
-            // $this->urlController = $this->slugController(CONTROLLER);
-            // $this->urlMetodo = $this->slugMetodo(METODO);
-            // $this->urlParameter = "";
-            // $this->loadPage($this->urlController ,$this->urlMetodo,  $this->urlParameter);
+       
         }
     }
 
@@ -43,7 +39,7 @@ class CarregarPgAdm  extends Config
         if (method_exists($classLoad, $this->urlMetodo)) {
             $classLoad->{$this->urlMetodo}($this->urlParameter);
         } else {
-            die("Could not load class metodo not found" . EMAILADMIN);
+            die("Could not load class metodo not found 46" . EMAILADMIN);
         }
     }
 

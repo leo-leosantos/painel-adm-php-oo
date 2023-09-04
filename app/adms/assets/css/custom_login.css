@@ -71,7 +71,8 @@ body {
     position: relative;
 }
 
-.wrapper-login .form-login .row input {
+.wrapper-login .form-login .row input,
+.wrapper-login .form-login .row button {
     height: 100%;
     width: 100%;
     outline: none;
@@ -85,7 +86,7 @@ body {
 
 /* Personalizar placeholder */
 
-.form-login .row input::placeholder {
+.form-login .row input::placeholder,.form-login .row button::placeholder {
     color: var(--third-color);
 }
 
@@ -103,7 +104,7 @@ body {
     justify-content: center;
 }
 
-.wrapper-login .form-login .button input {
+.wrapper-login .form-login .button button {
     color: var(--main-color);
     font-size: 20px;
     font-weight: 300;
@@ -113,7 +114,7 @@ body {
     cursor: pointer;
 }
 
-.form-login .button input:hover {
+.form-login .button button:hover {
     background: var(--second-bg-color);
 }
 
