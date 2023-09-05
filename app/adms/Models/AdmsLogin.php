@@ -35,7 +35,7 @@ class AdmsLogin
         if ($this->resultDb) {
             $this->valEmailPerm();
         } else {
-            $_SESSION['msg'] = " Error user or password incorrect";
+            $_SESSION['msg'] = " <p class='alert-danger'>Error user or password incorrect</p>";
             return false;
         }
     }
@@ -45,16 +45,16 @@ class AdmsLogin
         if ($this->resultDb[0]['adms_sits_user_id'] == 1) {
             $this->valPassword();
         } elseif ($this->resultDb[0]['adms_sits_user_id'] == 3) {
-            $_SESSION['msg'] = "Nexessari confirm email. SOlicite um um novo link <a href = '" . URLADM . "new-conf-email/index'>Clique aqui</a>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Nexessari confirm email. SOlicite um um novo link <a href = '" . URLADM . "new-conf-email/index'>Clique aqui</a></p>";
             $this->result = false;
         } elseif ($this->resultDb[0]['adms_sits_user_id'] == 5) {
-            $_SESSION['msg'] = "Email descastratado";
+            $_SESSION['msg'] = "<p class='alert-danger'>E-mail descatrdado</p>";
             $this->result = false;
         } elseif ($this->resultDb[0]['adms_sits_user_id'] == 2) {
-            $_SESSION['msg'] = "Email inativo";
+            $_SESSION['msg'] = "<p class='alert-danger'>Email inativo</p>";
             $this->result = false;
         } else {
-            $_SESSION['msg'] = "Email inativo";
+            $_SESSION['msg'] = "<p class='alert-danger'>Email inativo</p>";
             $this->result = false;
         }
     }
@@ -71,7 +71,7 @@ class AdmsLogin
 
             $this->result = true;
         } else {
-            $_SESSION['msg'] = "Error senha ou user not found";
+            $_SESSION['msg'] = "<p class='alert-danger'>Error user or password incorrect</p>";
             $this->result = false;
         }
     }
