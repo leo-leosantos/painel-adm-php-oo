@@ -17,7 +17,7 @@ class Logout
             $_SESSION['user_name'],
             $_SESSION['user_nickname'],$_SESSION['user_email'],$_SESSION['user_image']);
 
-            $_SESSION['msg'] = "Logout redirecit com sucess";
+            $_SESSION['msg'] = "<p class='alert-success'>Logout realizado com sucesso</p>";
             $urlRedirect =  URLADM . "login/index";
             header("Location: " . $urlRedirect);
       

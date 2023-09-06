@@ -75,7 +75,7 @@ class CarregarPgAdm  extends Config
         if ((isset($_SESSION['user_id'])) and (isset($_SESSION['user_name'])) and (isset($_SESSION['user_email']))) {
             $this->classLoad = "\\App\\Adms\\Controllers\\" . $this->urlController;
         } else {
-            $_SESSION['msg'] = "Error: Para acessar a pagina faça login";
+            $_SESSION['msg'] = "<p class='alert-danger'>Error: Para acessar a pagina faça login<p>";
             $urlRedirect =  URLADM . "login/index";
             header("Location: " . $urlRedirect);
         }

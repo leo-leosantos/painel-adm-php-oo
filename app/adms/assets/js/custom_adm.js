@@ -664,7 +664,6 @@ if (formEditConfEmailsPass) {
         }
     });
 }
-
 /* Inicio Dropdown Navbar */
 let notification = document.querySelector(".notification");
 let avatar = document.querySelector(".avatar");

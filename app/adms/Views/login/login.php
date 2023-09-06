@@ -29,12 +29,14 @@ if (isset($this->data['form'])) {
 
             </div>
         <form action="" method="post" id="form-login" class="form-login">
-          
+        <div class="row">
+
             <i class="fa-solid fa-user"></i>
             <input type="text" name="user" id="user" placeholder="Digite o Usuário" required value="<?php if (isset($valorForm['user'])) {
                                                                                                         echo $valorForm['user'];
                                                                                                     } ?>"><br><br>
-    </div>
+   
+   </div>
 
     <div class="row">
         <i class="fa-solid fa-lock"></i>

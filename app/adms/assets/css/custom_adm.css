@@ -115,13 +115,15 @@ body {
 }
 
 .dropdown-menu li,
-.dropdown-menu .item {
+.dropdown-menu a.item
+{
     display: flex;
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid var(--second-bg-color);
     cursor: pointer;
     font-size: 15px;
+    color: var(--fourth-color) ;
 }
 
 .dropdown-menu li img {
