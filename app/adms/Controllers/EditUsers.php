@@ -76,6 +76,7 @@ class EditUsers
 
     $listSelect =     new AdmsEditUser();
     $this->data['select'] = $listSelect->listSelect();
+    $this->data['sidebarActive']= "list-users";
 
     $loadView =   new ConfigView("adms/Views/users/editUser", $this->data);
     $loadView->loadView();

@@ -35,6 +35,7 @@ class ListUsers
             $_SESSION['msg'] = "<p style='color: #f00'>Nenhum ususer encontrado</p>";
         }
         //var_dump($this->data);
+        $this->data['sidebarActive']= "list-users";
 
         $loadView =   new ConfigView("adms/Views/users/listUsers", $this->data);
         $loadView->loadView();

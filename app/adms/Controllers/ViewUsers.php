@@ -47,6 +47,8 @@ class ViewUsers
 
     private function loadView()
     {
+        $this->data['sidebarActive']= "list-users";
+
         $loadView =   new ConfigView("adms/Views/users/viewUser", $this->data);
         $loadView->loadView();
     }

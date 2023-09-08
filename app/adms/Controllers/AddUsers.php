@@ -46,6 +46,8 @@ class AddUsers
     
     $this->data['select'] = $listSelect->listSelect();
 
+    $this->data['sidebarActive']= "list-users";
+
     $loadView =   new ConfigView("adms/Views/users/addUser", $this->data);
     $loadView->loadView();
   }
