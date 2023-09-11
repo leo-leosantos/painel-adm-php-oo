@@ -47,7 +47,7 @@ class AdmsListUsers
            // var_dump($this->resultPg);
 
         $listUsers =   new AdmsRead();
-        $listUsers->fullRead("SELECT usr.id, usr.name AS name_usr, usr.email , usr.adms_sits_user_id, 
+        $listUsers->fullRead("SELECT usr.id, usr.name AS name_usr, usr.email , usr.adms_sits_user_id, usr.created,
                               sit.name AS name_sit,
                               col.color As color
                               FROM adms_users AS usr

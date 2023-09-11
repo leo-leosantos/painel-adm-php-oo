@@ -34,10 +34,10 @@ class AdmsDeleteUser
 
             if ($delUser->getResult()) {
                 $this->deleteImg();
-                $_SESSION['msg'] = "<p style='color: green;'>Deletado com uscesso</p>";
+                $_SESSION['msg'] = "<p class='alert-success'>Deletado com uscesso</p>";
                 $this->result = true;
             } else {
-                $_SESSION['msg'] = "<p style='color: #f00;'>Nenhum user encontrado link 40</p>";
+                $_SESSION['msg'] = "<p class='alert-info'>Nenhum user encontrado link 40</p>";
                 $this->result = false;
             }
         } else {
@@ -59,7 +59,7 @@ class AdmsDeleteUser
         if ($this->resultBd) {
             return true;
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00'>Nenhum user encontrado link 62</p>";
+            $_SESSION['msg'] = "<p class='alert-info'>Nenhum user encontrado link 62</p>";
             return false;
         }
     }
