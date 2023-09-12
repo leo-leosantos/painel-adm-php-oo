@@ -836,3 +836,25 @@ select.input-adm:focus {
 
 
 /* Fim conteudo */
+
+
+/*Inicio texto*/
+
+.text-primary {
+    color: var(--primary-color);
+}
+
+.text-danger {
+    color: var(--danger-color);
+}
+
+.text-warning {
+    color: var(--warning-color);
+}
+.text-info {
+    color: var(--info-color);
+}
+.text-success {
+    color: var(--success-color);
+}
+/*fim texto*/
