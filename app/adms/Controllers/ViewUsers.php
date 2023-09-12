@@ -12,7 +12,7 @@ class ViewUsers
     private array $data = [];
     private ?string $id;
 
-    public function index(  ?string $id = null): void
+    public function index(?string $id = null): void
     {
 
 
@@ -37,7 +37,7 @@ class ViewUsers
                 header("Location: " . $urlRedirect);
              }
         }else{
-            $_SESSION['msg'] = "<p style='color: #f00'>Nenhum user encontrado</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Nenhum user encontrado</p>";
             $urlRedirect =  URLADM . "list-users/index";
             header("Location: " . $urlRedirect);
         }

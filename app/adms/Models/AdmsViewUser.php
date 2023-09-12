@@ -40,7 +40,7 @@ class AdmsViewUser
         if ($this->resultBd) {
             $this->result = true;
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00'>Nenhum user encontrado</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Nenhum user encontrado</p>";
             $this->result = false;
         }
     }
